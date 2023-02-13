@@ -11,4 +11,8 @@ public class CarFactoryService {
     public CarFactoryService(CarFactoryRepository carFactoryRepository) {
         this.carFactoryRepository = carFactoryRepository;
     }
+
+    public String getCars(){
+        return carFactoryRepository.getCars();
+    }
 }
