@@ -8,9 +8,9 @@ import java.util.StringJoiner;
 public class CarFactoryRepository {
 
     public String getCars() {
-        return "Available cars:" +
-                "Tesla model S3XY" +
-                "Toyota Corolla GR S" +
+        return "Available cars: " +
+                "Tesla model S3XY, " +
+                "Toyota Corolla GR S, " +
                 "Ford Fiesta";
     }
 
