@@ -8,7 +8,10 @@ import java.util.StringJoiner;
 public class CarFactoryRepository {
 
     public String getCars() {
-        return "All cars";
+        return "Available cars:" +
+                "Tesla model S3XY" +
+                "Toyota Corolla GR S" +
+                "Ford Fiesta";
     }
 
     public String getTesla() {
@@ -16,7 +19,7 @@ public class CarFactoryRepository {
         String engine = "Electrisch";
         String color = "Metallic Blauw";
         int radius = 400;
-        return String.format("Model: %s\nAandrijving: %s\nKleur: %s\nRadius %d km", model, color, engine, radius);
+        return String.format("Model: %s\nAandrijving: %s\nKleur: %s\nRadius %d km", model, engine, color, radius);
     }
 }
 
