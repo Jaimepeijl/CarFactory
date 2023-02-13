@@ -77,12 +77,10 @@ public class Car {
 
     @Override
     public String toString() {
-        return "Car{" +
-                "brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
-                ", colour='" + colour + '\'' +
-                ", type='" + type + '\'' +
-                ", stock=" + stock +
-                '}';
+        return  "brand=" + brand + '\'' +
+                ", model=" + model + '\'' +
+                ", colour=" + colour + '\'' +
+                ", type=" + type + '\'' +
+                ", stock=" + stock;
     }
 }
