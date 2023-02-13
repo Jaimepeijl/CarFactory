@@ -15,4 +15,8 @@ public class CarFactoryService {
     public String getCars(){
         return carFactoryRepository.getCars();
     }
+
+    public String getTestla() {
+        return carFactoryRepository.getTesla();
+    }
 }
