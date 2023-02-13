@@ -8,7 +8,7 @@ public class Car {
     private String colour;
     private String type;
     private int stock;
-    private static ArrayList<Car>cars = new ArrayList<>();
+    private static ArrayList<Car> cars = new ArrayList<>();
 
     public Car(String brand, String model, String colour, String type, int stock) {
         this.brand = brand;
@@ -30,6 +30,15 @@ public class Car {
             return cars.toString();
         } else return "Error";
     }
+    @Override
+    public String toString() {
+        return  "brand=" + brand + '\n' +
+                ", model=" + model + '\n' +
+                ", colour=" + colour + '\n' +
+                ", type=" + type + '\n' +
+                ", stock=" + stock;
+    }
+
 
     public static ArrayList<Car> getCars() {
         return cars;
@@ -75,12 +84,5 @@ public class Car {
         this.stock = stock;
     }
 
-    @Override
-    public String toString() {
-        return  "brand=" + brand + '\'' +
-                ", model=" + model + '\'' +
-                ", colour=" + colour + '\'' +
-                ", type=" + type + '\'' +
-                ", stock=" + stock;
-    }
+
 }
