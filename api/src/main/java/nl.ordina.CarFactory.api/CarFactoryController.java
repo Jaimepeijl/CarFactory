@@ -1,10 +1,12 @@
 package nl.ordina.CarFactory.api;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import nl.ordina.CarFactory.domain.CarFactoryService;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+
+@Controller
 public class CarFactoryController {
 
     public final CarFactoryService carFactoryService;
@@ -13,9 +15,15 @@ public class CarFactoryController {
         this.carFactoryService = carFactoryService;
     }
 
+    @GetMapping("/")
+    protected String showHomeScreen(Model model) {
+        return "homeScreen";
+    }
+
     @GetMapping("/cars")
-    public String getCars(){
-        return carFactoryService.getCars();
+    public String getCars(Model model){
+//        model.addAttribute(carFactoryService.getCars());
+        return "carOverview";
     }
 
     @GetMapping("/tesla")
