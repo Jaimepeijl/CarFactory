@@ -1,9 +1,13 @@
 package nl.ordina.app.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 
+@Getter
+@Setter
 public @Data class Car {
     private String brand;
     private String model;
@@ -39,5 +43,9 @@ public @Data class Car {
                 ", colour=" + colour + '\n' +
                 ", type=" + type + '\n' +
                 ", stock=" + stock;
+    }
+
+    public static ArrayList<Car> getCars() {
+        return cars;
     }
 }
