@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Tesla</title>
@@ -8,9 +8,28 @@
 <h3>Tesla model S3XY</h3>
 
 <div>
-  Looking for a car that offers style, performance, and sustainability all in one sleek package? Look no further than the Tesla Model S3XY. With its cutting-edge technology and innovative design, this car offers an unparalleled driving experience.
+    Looking for a car that offers style, performance, and sustainability all in one sleek package? Look no further
+    than the Tesla Model S3XY. With its cutting-edge technology and innovative design,
+    this car offers an unparalleled driving experience.
 </div>
 
+<div class=gridCar>
+        <img src="https://hips.hearstapps.com/hmg-prod/images/2019-tesla-model3-lt-airporthero-low-101-1587061146.jpg?crop=1xw:1xh;center,top&amp;resize=2048:*" jsaction="load:XAeZkd;" jsname="HiaYvf" class="n3VNCb KAlRDb" alt="Tesla Model 3: The Complete Guide" data-noaft="1" style="width: 482px; height: 321.255px; margin: 0px;">
+        <ul> specs
+            <li>
+                400 km
+                1000 KW
+            </li>
+            <li>
+                40.000 euro
+            </li>
+        </ul>
+</div>
+<a th:href="@{/cars}">
+    <button>
+        Back
+    </button>
+</a>
 
 
 </body>

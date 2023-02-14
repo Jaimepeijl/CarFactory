@@ -1,0 +1,7 @@
+.gridCar{
+    display: grid;
+    grid-template-columns: 60% 40%;
+    gap: 10px;
+    background-color: #2196F3;
+    padding: 10px;
+}
