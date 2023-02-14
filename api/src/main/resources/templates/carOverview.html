@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:href="http://www.w3.org/1999/xhtml">
 <head>
     <title>Car overview</title>
 </head>
@@ -36,7 +36,9 @@
     </tr>
     <tr>
         <td>
-            Tesla
+            <a th:href="@{/tesla}">
+                Tesla
+            </a>
         </td>
         <td>
             S3XY

@@ -27,7 +27,7 @@ public class CarFactoryController {
     }
 
     @GetMapping("/tesla")
-    public String getTesla(){
-        return carFactoryService.getTesla();
+    public String getTesla(Model model){
+        return "tesla";
     }
 }
