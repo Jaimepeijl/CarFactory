@@ -1,8 +1,10 @@
-package model;
+package nl.ordina.app.model;
+
+import lombok.Data;
 
 import java.util.ArrayList;
 
-public class Car {
+public @Data class Car {
     private String brand;
     private String model;
     private String colour;
@@ -38,51 +40,4 @@ public class Car {
                 ", type=" + type + '\n' +
                 ", stock=" + stock;
     }
-
-
-    public static ArrayList<Car> getCars() {
-        return cars;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public String getColour() {
-        return colour;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-
 }

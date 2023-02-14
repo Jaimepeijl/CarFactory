@@ -1,8 +1,8 @@
-package nl.ordina.CarFactory.api;
+package nl.ordina.app.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import nl.ordina.CarFactory.domain.CarFactoryService;
+import nl.ordina.app.service.CarFactoryService;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
