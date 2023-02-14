@@ -1,12 +1,10 @@
-package nl.ordina.CarFactory.app;
+package nl.ordina.app;
 
-import model.Car;
+import nl.ordina.app.model.Car;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan("nl.ordina.CarFactory.*")
 public class CarFactoryApplication {
     public static void main(String[] args) {
         Car tesla = new Car("Tesla", "Model 3", "Black", "Electric", 5);

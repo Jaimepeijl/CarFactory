@@ -1,7 +1,7 @@
-package nl.ordina.CarFactory.domain;
+package nl.ordina.app.service;
 
-import model.Car;
-import nl.ordina.CarFactory.repository.CarFactoryRepository;
+import nl.ordina.app.model.Car;
+import nl.ordina.app.repository.CarFactoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
