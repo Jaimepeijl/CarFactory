@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link th:href="@{/js/carOverview.css}" rel="stylesheet"/>
     <title>Car overview</title>
 </head>
 <body>
 <h2>Available cars</h2>
 
-<h2>Cars:</h2>
-<div>
-    <p th:text="${Tesla}"/>
-</div>
-
-<table style="border-top-color: black">
-    <tr style="border: black">
+<div th:if="${not#lists.isEmpty(cars)}">
+<table style="border-top-color: black" >
+    <thead>
+    <tr style="border: black" class="top-table">
         <td style="padding-right: 30px">
             <strong>Brand</strong>
         </td>
@@ -26,51 +24,20 @@
             <strong>Color</strong>
         </td>
     </tr>
-    <tr>
-        <td style="padding-right: 30px">
-            Toyota
-        </td>
-        <td style="padding-right: 30px">
-            Corolla
-        </td>
-        <td style="padding-right: 30px">
-            Hybrid
-        </td>
-        <td>
-            Red
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <a th:href="@{/tesla}">
-                Tesla
-            </a>
-        </td>
-        <td>
-            S3XY
-        </td>
-        <td>
-            Electric
-        </td>
-        <td>
-            Gray
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Ford
-        </td>
-        <td>
-            Fiesta
-        </td>
-        <td>
-            Petrol
-        </td>
-        <td>
-            Silver
-        </td>
-    </tr>
-</table>
+    </thead>
 
+    <tr th:each="car : ${cars}">
+        <td style="padding-right: 30px" th:text="${car.brand}"></td>
+        <td style="padding-right: 30px" th:text="${car.model}"></td>
+        <td style="padding-right: 30px" th:text="${car.type}"></td>
+        <td style="padding-right: 30px" th:text="${car.colour}"></td>
+    </tr>
+
+</table>
+</div>
+<h2>Brands :</h2>
+<a th:href="@{/tesla}">
+    Tesla
+</a>
 </body>
 </html>

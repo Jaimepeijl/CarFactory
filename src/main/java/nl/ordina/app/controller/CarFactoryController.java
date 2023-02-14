@@ -31,6 +31,10 @@ public class CarFactoryController {
 
         System.out.println(tesla);
         model.addAttribute("Tesla", tesla);
+        model.addAttribute("Toyota", toyota);
+        model.addAttribute("Ford", ford);
+
+        model.addAttribute("cars", Car.getCars());
         return "carOverview";
     }
 
