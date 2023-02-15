@@ -39,34 +39,5 @@
 <a th:href="@{/tesla}">
     Tesla
 </a>
-
-<form action="#" th:action="@{/cars/save}" th:object="${form}"
-      method="post"> Add a new car
-    <fieldset>
-        <input type="submit" id="submitButton" th:value="Save">
-        <input type="reset" id="resetButton" name="reset" th:value="Reset"/>
-        <table>
-            <thead>
-                <tr>
-                    <th>Brand</th>
-                    <th>Model</th>
-                    <th>Colour</th>
-                    <th>Type</th>
-                    <th>Stock</th>
-                </tr>
-            </thead>
-            <tbody>
-<!--            <tr th:each="car, itemStat : *{cars}">-->
-<!--                <td><input th:field="*{cars[__${itemStat.index}__].brand}" /></td>-->
-<!--                <td><input th:field="*{cars[__${itemStat.index}__].model}" /></td>-->
-<!--                <td><input th:field="*{cars[__${itemStat.index}__].colour}" /></td>-->
-<!--                <td><input th:field="*{cars[__${itemStat.index}__].type}" /></td>-->
-<!--                <td><input th:field="*{cars[__${itemStat.index}__].stock}" /></td>-->
-<!--            </tr>-->
-            </tbody>
-        </table>
-    </fieldset>
-
-</form>
 </body>
 </html>
