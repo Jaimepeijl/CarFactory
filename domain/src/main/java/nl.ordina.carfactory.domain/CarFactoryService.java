@@ -15,8 +15,21 @@ public class CarFactoryService {
         this.carFactoryRepository = carFactoryRepository;
     }
 
-    public boolean updateStock(Car car, int stock){
-        return car.getStock() - stock >= 5;
+    public boolean updateStock(Car car, int amount){
+        if (car.getStock() - amount > 5){
+        car.setStock(car.getStock() - amount);
+        return true;
+        }
+        return false;
+    }
+    public Car getCarByName(String carName){
+
+        for (int i = 0; i < getCars().size(); i++) {
+            if (carName == getCars().get(i).getBrand()){
+                break;
+            } return getCars().get(i);
+        }
+        return null;
     }
 
     public List<Car> getCars(){

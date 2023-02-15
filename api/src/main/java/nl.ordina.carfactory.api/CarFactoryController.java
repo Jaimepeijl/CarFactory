@@ -3,9 +3,7 @@ package nl.ordina.carfactory.api;
 import nl.ordina.carfactory.domain.CarFactoryService;
 import nl.ordina.carfactory.resources.Car;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CarFactoryController {
@@ -36,12 +34,21 @@ public class CarFactoryController {
 
         return carFactoryService.getCars().toString();
     }
-    @PutMapping("/updateStock")
-    public String updateStock (Car car, int amount){
-        if (carFactoryService.updateStock(car, amount)){
-            return "Stock is now" + (car.getStock() - amount);
+    @PatchMapping ("/update-stock")
+    public String updateStock (@RequestBody String carName){
+        int amount = 1;
+        if (carName != null
+//                && amount > 0
+        ){
+            Car car = carFactoryService.getCarByName(carName);
+            if(carFactoryService.updateStock(car, amount)){
+                carFactoryService.updateStock(car, amount);
+                return "Stock is now: " + (car.getStock());
+            }else {
+                return "Not enough stock";
+            }
         } else {
-            return "Not enough stock";
+            return "Wrong input";
         }
     }
 

@@ -27,7 +27,7 @@ public @Data class Car {
         this.stock = stock;
     }
     public static void cars (){
-        Car tesla = new Car("Tesla", "Model 3", "Black", "Electric", 5);
+        Car tesla = new Car("Tesla", "Model 3", "Black", "Electric", 10);
         Car toyota = new Car("Toyota", "Corolla", "Grey", "Hybrid", 2);
         Car ford = new Car("Ford", "Fiesta", "Rood", "Benzine", 4);
         Car.addCar(tesla);
