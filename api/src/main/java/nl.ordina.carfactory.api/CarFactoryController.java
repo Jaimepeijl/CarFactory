@@ -4,6 +4,7 @@ import nl.ordina.carfactory.domain.CarFactoryService;
 import nl.ordina.carfactory.resources.Car;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -33,6 +34,15 @@ public class CarFactoryController {
         model.addAttribute("cars", Car.getCars());
         return "carOverview";
     }
+    @PutMapping("/updateStock")
+    public String updateStock (Car car, int amount){
+        if (carFactoryService.updateStock(car, amount)){
+            return "Stock is now" + (car.getStock() - amount);
+        } else {
+            return "Not enough stock";
+        }
+    }
+
     @GetMapping("/tesla")
     public String getTesla(Model model){
         return "tesla";

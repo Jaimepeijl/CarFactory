@@ -16,13 +16,11 @@ public class CarFactoryService {
     }
 
     public boolean updateStock(Car car, int stock){
-        return car.getStock() - stock <= 5;
-
+        return car.getStock() - stock >= 5;
     }
 
-    public List<Car> findAll(){
-        carFactoryRepository.getCars();
-        return findAll();
+    public List<Car> getCars(){
+        return carFactoryRepository.getCars();
     }
 
     public String getTesla() {
