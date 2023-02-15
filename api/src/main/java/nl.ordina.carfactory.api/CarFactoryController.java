@@ -2,12 +2,13 @@ package nl.ordina.carfactory.api;
 
 import nl.ordina.carfactory.domain.CarFactoryService;
 import nl.ordina.carfactory.resources.Car;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@ComponentScan(basePackages = "nl.ordina.carfactory")
 public class CarFactoryController {
 
     public final CarFactoryService carFactoryService;
@@ -23,28 +24,17 @@ public class CarFactoryController {
 
     @GetMapping("/cars")
     public String getCars(Model model){
-//        Car tesla = new Car("Tesla", "Model 3", "Black", "Electric", 5);
-//        Car toyota = new Car("Toyota", "Corolla", "Grey", "Hybrid", 2);
-//        Car ford = new Car("Ford", "Fiesta", "Rood", "Benzine", 4);
-//
-//        model.addAttribute("Tesla", tesla);
-//        model.addAttribute("Toyota", toyota);
-//        model.addAttribute("Ford", ford);
-//
-//        model.addAttribute("cars", Car.getCars());
+        Car tesla = new Car("Tesla", "Model 3", "Black", "Electric", 5);
+        Car toyota = new Car("Toyota", "Corolla", "Grey", "Hybrid", 2);
+        Car ford = new Car("Ford", "Fiesta", "Rood", "Benzine", 4);
 
+        model.addAttribute("Tesla", tesla);
+        model.addAttribute("Toyota", toyota);
+        model.addAttribute("Ford", ford);
 
-        return carFactoryService.getCars().toString();
+        model.addAttribute("cars", Car.getCars());
+        return "carOverview";
     }
-    @PutMapping("/updateStock")
-    public String updateStock (Car car, int amount){
-        if (carFactoryService.updateStock(car, amount)){
-            return "Stock is now" + (car.getStock() - amount);
-        } else {
-            return "Not enough stock";
-        }
-    }
-
     @GetMapping("/tesla")
     public String getTesla(Model model){
         return "tesla";

@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-<artifactId>CarFactory-app</artifactId>
+<artifactId>app</artifactId>
 
     <dependencies>
         <dependency>
@@ -13,11 +13,26 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>nl.ordina.carfactory</groupId>
+            <artifactId>repository</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>nl.ordina.carfactory</groupId>
+            <artifactId>api</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>nl.ordina.carfactory</groupId>
+            <artifactId>domain</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
     </dependencies>
 
     <parent>
-        <groupId>nl.ordina</groupId>
-        <artifactId>CarFactory</artifactId>
+        <groupId>nl.ordina.carfactory</groupId>
+        <artifactId>parent</artifactId>
         <version>1.0</version>
     </parent>
 </project>
