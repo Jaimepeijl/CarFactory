@@ -16,6 +16,9 @@ public @Data class Car {
     private int stock;
     private static ArrayList<Car> cars = new ArrayList<>();
 
+    public Car() {
+    }
+
     public Car(String brand, String model, String colour, String type, int stock) {
         this.brand = brand;
         this.model = model;

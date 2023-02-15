@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import nl.ordina.app.service.CarFactoryService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
 
@@ -36,6 +38,23 @@ public class CarFactoryController {
 
         model.addAttribute("cars", Car.getCars());
         return "carOverview";
+    }
+
+    @GetMapping("/create")
+    public String showCreateForm (Model model){
+        Car carForm = new Car();
+
+        carForm.addCar(new Car());
+
+        model.addAttribute("form", carForm);
+
+        return "carOverview";
+    }
+    @PostMapping("/save")
+    public String saveCars (@ModelAttribute Car form, Model model){
+        carFactoryService.saveCar(form);
+        model.addAttribute("cars", carFactoryService.findAll());
+        return "redirect:/carOverview";
     }
 
     @GetMapping("/tesla")
