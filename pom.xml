@@ -9,20 +9,23 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
+            <version>2.7.8</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
-            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.7.8</version>
         </dependency>
     </dependencies>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.2</version>
-        <relativePath/>
+        <version>2.7.8</version>
     </parent>
 
     <packaging>pom</packaging>
@@ -34,50 +37,59 @@
     </properties>
 
     <dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>nl.ordina</groupId>
-            <artifactId>CarFactory-repository</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>nl.ordina</groupId>
-            <artifactId>CarFactory-api</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>nl.ordina</groupId>
-            <artifactId>CarFactory-domain</artifactId>
-            <version>1.0</version>
-        </dependency>
+        <dependencies>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-            <version>2.7.8</version>
-        </dependency>
+            <dependency>
+                <groupId>nl.ordina</groupId>
+                <artifactId>CarFactory-repository</artifactId>
+                <version>1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>nl.ordina</groupId>
+                <artifactId>CarFactory-api</artifactId>
+                <version>1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>nl.ordina</groupId>
+                <artifactId>CarFactory-domain</artifactId>
+                <version>1.0</version>
+            </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.7.3</version>
-        </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>2.7.8</version>
+            </dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>2.7.8</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.24</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>2.7.8</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-autoconfigure</artifactId>
+                <version>2.7.8</version>
+                <scope>compile</scope>
+            </dependency>
+        </dependencies>
     </dependencyManagement>
 
     <build>
