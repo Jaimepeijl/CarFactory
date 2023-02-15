@@ -1,6 +1,6 @@
-package nl.ordina.app.repository;
+package nl.ordina.carfactory.repository;
 
-import nl.ordina.app.model.Car;
+import nl.ordina.carfactory.resources.Car;
 import org.springframework.stereotype.Repository;
 
 @Repository

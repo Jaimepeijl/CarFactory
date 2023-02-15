@@ -1,12 +1,12 @@
-package nl.ordina.app.controller;
+package nl.ordina.carfactory.api;
 
-import nl.ordina.app.model.Car;
-import org.springframework.stereotype.Controller;
-import nl.ordina.app.service.CarFactoryService;
+import nl.ordina.carfactory.domain.CarFactoryService;
+import nl.ordina.carfactory.resources.Car;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class CarFactoryController {
 
     public final CarFactoryService carFactoryService;

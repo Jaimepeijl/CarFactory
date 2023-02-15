@@ -1,6 +1,6 @@
-package nl.ordina.app;
+package nl.ordina.carfactory.app;
 
-import nl.ordina.app.model.Car;
+import nl.ordina.carfactory.resources.Car;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
