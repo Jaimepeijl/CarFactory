@@ -2,6 +2,7 @@ package nl.ordina.carfactory.api;
 
 import nl.ordina.carfactory.domain.CarFactoryService;
 import nl.ordina.carfactory.resources.Car;
+import nl.ordina.carfactory.resources.CarDto;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +36,7 @@ public class CarFactoryController {
         return carFactoryService.getCars().toString();
     }
     @PatchMapping ("/update-stock")
-    public String updateStock (@RequestBody String carName){
+    public String updateStock (@RequestBody CarDto carName){
         int amount = 1;
         if (carName != null
 //                && amount > 0

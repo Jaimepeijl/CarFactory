@@ -28,8 +28,8 @@ public @Data class Car {
     }
     public static void cars (){
         Car tesla = new Car("Tesla", "Model 3", "Black", "Electric", 10);
-        Car toyota = new Car("Toyota", "Corolla", "Grey", "Hybrid", 2);
-        Car ford = new Car("Ford", "Fiesta", "Rood", "Benzine", 4);
+        Car toyota = new Car("Toyota", "Corolla", "Grey", "Hybrid", 20);
+        Car ford = new Car("Ford", "Fiesta", "Rood", "Benzine", 43);
         Car.addCar(tesla);
         Car.addCar(toyota);
         Car.addCar(ford);
@@ -42,6 +42,7 @@ public @Data class Car {
             return false;
         }
     }
+
     @Override
     public String toString() {
         return  "brand=" + brand + '\n' +

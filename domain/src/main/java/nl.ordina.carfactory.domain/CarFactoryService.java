@@ -2,9 +2,11 @@ package nl.ordina.carfactory.domain;
 
 import nl.ordina.carfactory.repository.CarFactoryRepository;
 import nl.ordina.carfactory.resources.Car;
+import nl.ordina.carfactory.resources.CarDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CarFactoryService {
@@ -22,12 +24,13 @@ public class CarFactoryService {
         }
         return false;
     }
-    public Car getCarByName(String carName){
+    public Car getCarByName(CarDto carName){
 
         for (int i = 0; i < getCars().size(); i++) {
-            if (carName == getCars().get(i).getBrand()){
-                break;
-            } return getCars().get(i);
+            String car = getCars().get(i).getBrand().toLowerCase();
+            if (Objects.equals(carName.getName(), car)){
+                return getCars().get(i);
+            }
         }
         return null;
     }
