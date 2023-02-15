@@ -34,11 +34,6 @@ public @Data class Car {
             return false;
         }
     }
-    public static String printCars(){
-        if (cars != null){
-            return cars.toString();
-        } else return "Error";
-    }
     @Override
     public String toString() {
         return  "brand=" + brand + '\n' +

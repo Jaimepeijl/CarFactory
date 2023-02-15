@@ -15,16 +15,14 @@ public class CarFactoryService {
         this.carFactoryRepository = carFactoryRepository;
     }
 
+    public boolean updateStock(Car car, int stock){
+        return car.getStock() - stock <= 5;
+
+    }
+
     public List<Car> findAll(){
         carFactoryRepository.getCars();
         return findAll();
-    }
-    public void saveCar (Car car){
-        Car.addCar(car);
-    }
-
-    public String getCars(){
-        return carFactoryRepository.getCars();
     }
 
     public String getTesla() {
