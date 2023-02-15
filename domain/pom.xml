@@ -19,14 +19,7 @@
             <groupId>nl.ordina</groupId>
             <artifactId>CarFactory-repository</artifactId>
         </dependency>
-        <dependency>
-            <groupId>nl.ordina</groupId>
-            <artifactId>CarFactory-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>nl.ordina</groupId>
-            <artifactId>CarFactory-domain</artifactId>
-        </dependency>
+
     </dependencies>
 
     <parent>

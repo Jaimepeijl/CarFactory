@@ -7,9 +7,6 @@ import java.util.ArrayList;
 
 @Repository
 public class CarFactoryRepository {
-    Car tesla = new Car("Tesla", "Model 3", "Black", "Electric", 5);
-    Car toyota = new Car("Toyota", "Corolla", "Grey", "Hybrid", 2);
-    Car ford = new Car("Ford", "Fiesta", "Rood", "Benzine", 4);
 
     public ArrayList<Car> getCars(){
         return Car.getCars();

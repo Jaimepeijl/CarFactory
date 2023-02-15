@@ -23,16 +23,18 @@ public class CarFactoryController {
 
     @GetMapping("/cars")
     public String getCars(Model model){
-        Car tesla = new Car("Tesla", "Model 3", "Black", "Electric", 5);
-        Car toyota = new Car("Toyota", "Corolla", "Grey", "Hybrid", 2);
-        Car ford = new Car("Ford", "Fiesta", "Rood", "Benzine", 4);
+//        Car tesla = new Car("Tesla", "Model 3", "Black", "Electric", 5);
+//        Car toyota = new Car("Toyota", "Corolla", "Grey", "Hybrid", 2);
+//        Car ford = new Car("Ford", "Fiesta", "Rood", "Benzine", 4);
+//
+//        model.addAttribute("Tesla", tesla);
+//        model.addAttribute("Toyota", toyota);
+//        model.addAttribute("Ford", ford);
+//
+//        model.addAttribute("cars", Car.getCars());
 
-        model.addAttribute("Tesla", tesla);
-        model.addAttribute("Toyota", toyota);
-        model.addAttribute("Ford", ford);
 
-        model.addAttribute("cars", Car.getCars());
-        return "carOverview";
+        return carFactoryService.getCars().toString();
     }
     @PutMapping("/updateStock")
     public String updateStock (Car car, int amount){
