@@ -48,7 +48,8 @@ public @Data class Car {
                 ", model=" + model + '\n' +
                 ", colour=" + colour + '\n' +
                 ", type=" + type + '\n' +
-                ", stock=" + stock;
+                ", stock=" + stock + '\n' +
+                "--------------------------" + '\n';
     }
 
     public static ArrayList<Car> getCars() {

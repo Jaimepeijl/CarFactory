@@ -18,7 +18,7 @@ public class CarFactoryService {
         this.carFactoryRepository = carFactoryRepository;
     }
 
-    public boolean updateStock(String carName, CarDto carDto, int amount){
+    public boolean updateStock(String carName, int amount){
 
         Car car = getCarByName(carName);
         if (car.getStock() - amount > 5){
@@ -40,6 +40,9 @@ public class CarFactoryService {
 
     public List<Car> getCars(){
         return carFactoryRepository.getCars();
+    }
+    public String getCarsString(){
+        return carFactoryRepository.getCars().toString();
     }
 
     public String getTesla() {
