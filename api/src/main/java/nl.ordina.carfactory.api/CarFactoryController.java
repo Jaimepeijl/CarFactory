@@ -2,11 +2,11 @@ package nl.ordina.carfactory.api;
 
 import nl.ordina.carfactory.domain.CarFactoryService;
 import nl.ordina.carfactory.repository.model.Car;
+import nl.ordina.carfactory.repository.model.CarDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class CarFactoryController {
@@ -37,22 +37,30 @@ public class CarFactoryController {
 
         return carFactoryService.getCars().toString();
     }
-    @PatchMapping("/update-stock")
-    public String updateStock (@RequestBody String carName){
-        int amount = 1;
-        if (carName != null
+    @PatchMapping("/update-stock/{carName}")
+    public String updateStock (@PathVariable String carName, @RequestBody CarDto carDto){
+        try{
+            int amount = 1;
+            if (carName != null
 //                && amount > 0
-        ){
-            Car car = carFactoryService.getCarByName(carName);
-            if(carFactoryService.updateStock(car, amount)){
-                carFactoryService.updateStock(car, amount);
-                return "Stock is now: " + (car.getStock());
-            }else {
-                return "Not enough stock";
+            ){
+
+                Car car = carFactoryService.getCarByName(carName);
+                if(carFactoryService.updateStock(carName, carDto, amount)){
+                    carFactoryService.updateStock(carName, carDto, amount);
+                    return "Stock is now: " + (car.getStock());
+                }else {
+                    return "Not enough stock";
+                }
+            } else {
+                return "Wrong input";
             }
-        } else {
-            return "Wrong input";
+
+
+        } catch (CarNotFoundException e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
+
     }
 
     @GetMapping("/tesla")
