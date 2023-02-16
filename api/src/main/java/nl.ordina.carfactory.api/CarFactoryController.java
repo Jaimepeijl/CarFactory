@@ -4,6 +4,7 @@ import nl.ordina.carfactory.domain.CarFactoryService;
 import nl.ordina.carfactory.repository.model.Car;
 import nl.ordina.carfactory.repository.model.CarDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -38,29 +39,23 @@ public class CarFactoryController {
         return carFactoryService.getCars().toString();
     }
     @PatchMapping("/update-stock/{carName}")
-    public String updateStock (@PathVariable String carName, @RequestBody CarDto carDto){
+    public ResponseEntity<Object> updateStock (@PathVariable String carName, @RequestBody CarDto carDto){
         try{
             int amount = 1;
-            if (carName != null
-//                && amount > 0
-            ){
+                if (carFactoryService.getCarByName(carName) != null){
+                    Car car = carFactoryService.getCarByName(carName);
 
-                Car car = carFactoryService.getCarByName(carName);
                 if(carFactoryService.updateStock(carName, carDto, amount)){
                     carFactoryService.updateStock(carName, carDto, amount);
-                    return "Stock is now: " + (car.getStock());
+                    return new ResponseEntity<>("Stock is now: " + (car.getStock()), HttpStatus.OK);
                 }else {
-                    return "Not enough stock";
+                    return new ResponseEntity<>("Not enough stock", HttpStatus.BAD_REQUEST);
                 }
-            } else {
-                return "Wrong input";
-            }
-
-
-        } catch (CarNotFoundException e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-
+        return new ResponseEntity<>("Car doesn't exist", HttpStatus.BAD_REQUEST);
+        } catch (CarNotFoundException e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/tesla")
