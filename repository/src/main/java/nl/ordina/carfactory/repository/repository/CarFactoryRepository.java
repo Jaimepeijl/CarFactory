@@ -1,6 +1,7 @@
-package nl.ordina.carfactory.repository;
+package nl.ordina.carfactory.repository.repository;
 
-import nl.ordina.carfactory.resources.Car;
+
+import nl.ordina.carfactory.repository.model.Car;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

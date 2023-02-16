@@ -1,8 +1,9 @@
 package nl.ordina.carfactory.domain;
 
-import nl.ordina.carfactory.repository.CarFactoryRepository;
-import nl.ordina.carfactory.resources.Car;
+import nl.ordina.carfactory.repository.repository.CarFactoryRepository;
+import nl.ordina.carfactory.repository.model.Car;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
@@ -39,4 +40,12 @@ public class CarFactoryService {
     public String getTesla() {
         return carFactoryRepository.getTesla();
     }
+
+    Car tesla = new Car("Tesla", "Model 3", "Black", "Electric", 5);
+    Car toyota = new Car("Toyota", "Corolla", "Grey", "Hybrid", 2);
+    Car ford = new Car("Ford", "Fiesta", "Rood", "Benzine", 4);
+
+//        Car.addCar(tesla);
+//        Car.addCar(toyota);
+//        Car.addCar(ford);
 }

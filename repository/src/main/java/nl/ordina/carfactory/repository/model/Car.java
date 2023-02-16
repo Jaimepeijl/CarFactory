@@ -1,4 +1,4 @@
-package nl.ordina.carfactory.resources;
+package nl.ordina.carfactory.repository.model;
 
 import lombok.Data;
 import lombok.Getter;
