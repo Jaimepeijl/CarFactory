@@ -38,9 +38,9 @@ public class CarFactoryController {
             };
                 if (carFactoryService.getCarByName(carName) != null){
                     Car car = carFactoryService.getCarByName(carName);
-                if(carFactoryService.updateStock(carName, amount)){
+                if (carFactoryService.updateStock(carName, amount)){
                     return new ResponseEntity<>("Stock is now: " + (car.getStock()), HttpStatus.OK);
-                }else {
+                } else {
                     return new ResponseEntity<>("Not enough stock", HttpStatus.BAD_REQUEST);
                 }
         }
