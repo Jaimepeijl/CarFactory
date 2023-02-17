@@ -24,6 +24,18 @@ public class Phone {
         this.stock = stock;
     }
 
+    public static void phones(){
+        Phone iPhone = new Phone("iPhone 123", "Grijs", 5, 10);
+        Phone samsung = new Phone("Samsung 091", "Blauw", 3, 10);
+        Phone sony = new Phone("Sony Space", "Zwart", 5, 10);
+        Phone ordina = new Phone("Ordina Basic", "Groen", 1, 10);
+
+        Phone.addPhone(iPhone);
+        Phone.addPhone(samsung);
+        Phone.addPhone(sony);
+        Phone.addPhone(ordina);
+    }
+
     public static boolean addPhone (Phone phone){
         if (phone != null){
             phones.add(phone);
@@ -35,5 +47,10 @@ public class Phone {
 
     public static ArrayList<Phone> getPhones() {
         return phones;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("name: %s,\ncolour: %s,\ncameras: %s,\nstock: %s,\n", name, colour, cameras, stock) + "--------------\n";
     }
 }
