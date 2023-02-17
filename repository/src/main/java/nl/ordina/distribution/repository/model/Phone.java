@@ -1,4 +1,4 @@
-package nl.ordina.carfactory.repository.model;
+package nl.ordina.distribution.repository.model;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package nl.ordina.distribution.repository.repository;
 
-
+import nl.ordina.distribution.repository.model.Phone;
 import nl.ordina.distribution.repository.model.Car;
 import org.springframework.stereotype.Repository;
 
