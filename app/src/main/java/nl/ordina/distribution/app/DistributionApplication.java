@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "nl.ordina.distribution")
+@ComponentScan(basePackages = "nl.ordina.distribution.*")
 public class DistributionApplication {
     public static void main(String[] args) {
         Car.cars();
