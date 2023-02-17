@@ -52,6 +52,9 @@ public class CarFactoryService {
     public String getCarsString(){
         return carFactoryRepository.getCars().toString();
     }
+    public String getPhonesString(){
+        return carFactoryRepository.getPhones().toString();
+    }
 
     public String getTesla() {
         return carFactoryRepository.getTesla();

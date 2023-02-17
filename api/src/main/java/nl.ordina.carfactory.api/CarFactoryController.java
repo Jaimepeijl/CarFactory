@@ -29,6 +29,11 @@ public class CarFactoryController {
 //        model.addAttribute("cars", Car.getCars());
         return carFactoryService.getCarsString();
     }
+
+    @GetMapping("/phones")
+    public String getPhones(){
+        return carFactoryService.getPhonesString();
+    }
     @PutMapping("/update-stock/{carName}/{amount}")
     public ResponseEntity<Object> updateStock (@PathVariable String carName, @PathVariable int amount){
         try{
