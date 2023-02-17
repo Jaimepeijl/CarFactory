@@ -44,12 +44,9 @@ public @Data class Car {
     }
     @Override
     public String toString() {
-        return  "brand=" + brand + '\n' +
-                ", model=" + model + '\n' +
-                ", colour=" + colour + '\n' +
-                ", type=" + type + '\n' +
-                ", stock=" + stock + '\n' +
-                "--------------------------" + '\n';
+
+        return String.format("brand: %s,\nmodel: %s,\ncolour: %s\ntype: %s\nstock: %s\n",
+                brand, model, colour, type,stock);
     }
 
     public static ArrayList<Car> getCars() {
