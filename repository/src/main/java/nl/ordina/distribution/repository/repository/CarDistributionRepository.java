@@ -12,8 +12,8 @@ public class CarDistributionRepository {
     public ArrayList<Car> getCars(){
         return Car.getCars();
     }
-    public ArrayList<nl.ordina.carfactory.repository.model.Phone> getPhones(){
-        return nl.ordina.carfactory.repository.model.Phone.getPhones();
+    public ArrayList<Phone> getPhones(){
+        return Phone.getPhones();
     }
 
     public String getTesla() {
