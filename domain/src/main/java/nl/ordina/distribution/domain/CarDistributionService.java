@@ -52,7 +52,7 @@ public class CarDistributionService {
         return carDistributionRepository.getCars().toString();
     }
     public String getPhonesString(){
-        return carFactoryRepository.getPhones().toString();
+        return carDistributionRepository.getPhones().toString();
     }
 
     public String getTesla() {

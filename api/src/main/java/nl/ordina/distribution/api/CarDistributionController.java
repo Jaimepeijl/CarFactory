@@ -31,7 +31,7 @@ public class CarDistributionController {
 
     @GetMapping("/phones")
     public String getPhones(){
-        return carFactoryService.getPhonesString();
+        return carDistributionService.getPhonesString();
     }
     @PutMapping("/update-stock/{carName}/{amount}")
     public ResponseEntity<Object> updateStock (@PathVariable String carName, @PathVariable int amount){
