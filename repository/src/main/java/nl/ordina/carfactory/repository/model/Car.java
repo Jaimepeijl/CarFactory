@@ -46,7 +46,7 @@ public @Data class Car {
     public String toString() {
 
         return String.format("brand: %s,\nmodel: %s,\ncolour: %s\ntype: %s\nstock: %s\n",
-                brand, model, colour, type,stock);
+                brand, model, colour, type,stock) + "--------------\n";
     }
 
     public static ArrayList<Car> getCars() {
