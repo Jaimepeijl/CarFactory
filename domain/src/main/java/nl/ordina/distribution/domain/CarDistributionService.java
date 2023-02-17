@@ -51,7 +51,4 @@ public class CarDistributionService {
     public String getCarsString(){
         return carDistributionRepository.getCars().toString();
     }
-    public String getPhonesString(){
-        return carDistributionRepository.getPhones().toString();
-    }
 }

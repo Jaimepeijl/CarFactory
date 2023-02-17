@@ -1,6 +1,5 @@
 package nl.ordina.distribution.repository.repository;
 
-import nl.ordina.distribution.repository.model.Phone;
 import nl.ordina.distribution.repository.model.Car;
 import org.springframework.stereotype.Repository;
 
@@ -11,9 +10,6 @@ public class CarDistributionRepository {
 
     public ArrayList<Car> getCars(){
         return Car.getCars();
-    }
-    public ArrayList<nl.ordina.carfactory.repository.model.Phone> getPhones(){
-        return nl.ordina.carfactory.repository.model.Phone.getPhones();
     }
 
     public String getTesla() {
