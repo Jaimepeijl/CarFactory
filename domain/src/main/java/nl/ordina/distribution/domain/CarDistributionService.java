@@ -52,10 +52,6 @@ public class CarDistributionService {
         return carDistributionRepository.getCars().toString();
     }
     public String getPhonesString(){
-        return carFactoryRepository.getPhones().toString();
-    }
-
-    public String getTesla() {
-        return carDistributionRepository.getTesla();
+        return carDistributionRepository.getPhones().toString();
     }
 }

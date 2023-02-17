@@ -36,12 +36,9 @@ public class Phone {
         Phone.addPhone(ordina);
     }
 
-    public static boolean addPhone (Phone phone){
+    public static void addPhone (Phone phone){
         if (phone != null){
             phones.add(phone);
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -51,6 +48,7 @@ public class Phone {
 
     @Override
     public String toString() {
-        return String.format("name: %s,\ncolour: %s,\ncameras: %s,\nstock: %s,\n", name, colour, cameras, stock) + "--------------\n";
+        return String.format("name: %s,\ncolour: %s,\ncameras: %s,\nstock: %s,\n", name, colour, cameras, stock) +
+                "--------------\n";
     }
 }

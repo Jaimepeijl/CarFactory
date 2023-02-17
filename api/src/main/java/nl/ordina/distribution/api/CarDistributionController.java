@@ -2,10 +2,13 @@ package nl.ordina.distribution.api;
 
 import nl.ordina.distribution.domain.CarDistributionService;
 import nl.ordina.distribution.repository.model.Car;
+import nl.ordina.distribution.repository.model.Laptop;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @RestController
 @CrossOrigin
@@ -31,7 +34,7 @@ public class CarDistributionController {
 
     @GetMapping("/phones")
     public String getPhones(){
-        return carFactoryService.getPhonesString();
+        return carDistributionService.getPhonesString();
     }
     @PutMapping("/update-stock/{carName}/{amount}")
     public ResponseEntity<Object> updateStock (@PathVariable String carName, @PathVariable int amount){
@@ -54,8 +57,4 @@ public class CarDistributionController {
         }
     }
 
-    @GetMapping("/tesla")
-    public String getTesla(Model model){
-        return "tesla";
-    }
 }
