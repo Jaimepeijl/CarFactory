@@ -1,6 +1,7 @@
 package nl.ordina.distribution.app;
 
 import nl.ordina.distribution.repository.model.Car;
+import nl.ordina.distribution.repository.model.Phone;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 public class DistributionApplication {
     public static void main(String[] args) {
         Car.cars();
+        Phone.phones();
         SpringApplication.run(DistributionApplication.class, args);
     }
 }

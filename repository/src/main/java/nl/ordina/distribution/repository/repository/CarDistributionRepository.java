@@ -12,6 +12,9 @@ public class CarDistributionRepository {
     public ArrayList<Car> getCars(){
         return Car.getCars();
     }
+    public ArrayList<Phone> getPhones(){
+        return Phone.getPhones();
+    }
 
     public String getTesla() {
         String model  = "Tesla S3XY";
