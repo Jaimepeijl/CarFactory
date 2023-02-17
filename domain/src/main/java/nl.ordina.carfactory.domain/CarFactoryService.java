@@ -20,8 +20,16 @@ public class CarFactoryService {
 
     public boolean updateStock(String carName, int amount){
 
+        int minStock = 5;
         Car car = getCarByName(carName);
-        if (car.getStock() - amount > 5){
+        if (car == getCarByName("tesla")){
+            minStock = 2;
+        } else if (car == getCarByName("toyota")) {
+            minStock = 1;
+        } else if (car == getCarByName("ford")) {
+            minStock = 4;
+        }
+        if (car.getStock() - amount >= minStock){
         car.setStock(car.getStock() - amount);
         return true;
         }
@@ -48,12 +56,4 @@ public class CarFactoryService {
     public String getTesla() {
         return carFactoryRepository.getTesla();
     }
-
-    Car tesla = new Car("Tesla", "Model 3", "Black", "Electric", 5);
-    Car toyota = new Car("Toyota", "Corolla", "Grey", "Hybrid", 2);
-    Car ford = new Car("Ford", "Fiesta", "Rood", "Benzine", 4);
-
-//        Car.addCar(tesla);
-//        Car.addCar(toyota);
-//        Car.addCar(ford);
 }
