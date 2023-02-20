@@ -1,5 +1,6 @@
 package nl.ordina.distribution.domain;
 
+import nl.ordina.distribution.repository.dto.PhoneDto;
 import nl.ordina.distribution.repository.model.Phone;
 import nl.ordina.distribution.repository.repository.PhoneDistributionRepository;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,10 @@ public class PhoneDistributionService {
         this.phoneDistributionRepository = phoneDistributionRepository;
     }
 
-    public boolean updateStock (String phoneName, int amount) {
+    public boolean updateStock (PhoneDto phoneDto) {
 
-        Phone phone = getPhoneByName(phoneName);
+        Phone phone = getPhoneByName(phoneDto.getName());
+        int amount = phoneDto.getStock();
 
         if (phone.getStock() - amount >= phone.getMinStock()){
             phone.setStock(phone.getStock() - amount);
@@ -27,8 +29,8 @@ public class PhoneDistributionService {
     }
     public Phone getPhoneByName (String phoneName) {
         for (int i = 0; i < getPhones().size(); i++) {
-            String car = getPhones().get(i).getName().toLowerCase();
-            if (Objects.equals(phoneName, car)){
+            String phone = getPhones().get(i).getName().toLowerCase();
+            if (Objects.equals(phoneName, phone)){
                 return getPhones().get(i);
             }
         }
