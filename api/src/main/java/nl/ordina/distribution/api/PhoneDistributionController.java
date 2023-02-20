@@ -1,6 +1,7 @@
 package nl.ordina.distribution.api;
 
 import nl.ordina.distribution.domain.PhoneDistributionService;
+import nl.ordina.distribution.repository.dto.PhoneDto;
 import nl.ordina.distribution.repository.model.Phone;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +22,15 @@ public class PhoneDistributionController {
         return phoneDistributionService.getPhonesString();
     }
 
-    @PutMapping("/phones/update-stock/{phoneName}/{amount}")
-    public ResponseEntity<Object> updateStock (@PathVariable String phoneName, @PathVariable int amount){
+    @PutMapping("/phones/update-stock/{phoneName}")
+    public ResponseEntity<Object> updateStock (@PathVariable String phoneName, @RequestBody PhoneDto phoneDto){
         try{
-            System.out.println(amount);
+            int amount = phoneDto.getStock();
             if (amount <= 0 ){
                 amount = 1;
             };
-            if (phoneDistributionService.getPhoneByName(phoneName) != null){
-                Phone phone = phoneDistributionService.getPhoneByName(phoneName);
+            if (phoneDistributionService.getPhoneByName(phoneDto.getName()) != null){
+                Phone phone = phoneDistributionService.getPhoneByName(phoneDto.getName());
                 if (phoneDistributionService.updateStock(phoneName, amount)){
                     return new ResponseEntity<>("Stock is now: " + (phone.getStock()), HttpStatus.OK);
                 } else {

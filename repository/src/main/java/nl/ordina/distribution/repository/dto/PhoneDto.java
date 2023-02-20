@@ -5,14 +5,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CarDto {
+public class PhoneDto {
     private String name;
     private int stock;
 
-    public CarDto() {
+    public PhoneDto() {
     }
 
-    public CarDto(String name, int stock) {
+    public PhoneDto(String name, int stock) {
         this.name = name;
         this.stock = stock;
     }
