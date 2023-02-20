@@ -1,4 +1,4 @@
-package nl.ordina.distribution.repository.model;
+package nl.ordina.distribution.repository.dto;
 
 import lombok.Getter;
 import lombok.Setter;

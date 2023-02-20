@@ -31,8 +31,7 @@ public class CarDistributionService {
         if (car.getStock() - amount >= minStock){
         car.setStock(car.getStock() - amount);
         return true;
-        }
-        return false;
+        } return false;
     }
     public Car getCarByName(String carName){
 
