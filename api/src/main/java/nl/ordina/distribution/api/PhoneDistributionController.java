@@ -1,6 +1,7 @@
 package nl.ordina.distribution.api;
 
 import nl.ordina.distribution.domain.PhoneDistributionService;
+import nl.ordina.distribution.repository.dto.PhoneDto;
 import nl.ordina.distribution.repository.model.Phone;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,16 +22,17 @@ public class PhoneDistributionController {
         return phoneDistributionService.getPhonesString();
     }
 
-    @PutMapping("/phones/update-stock/{phoneName}/{amount}")
-    public ResponseEntity<Object> updateStock (@PathVariable String phoneName, @PathVariable int amount){
+    @PutMapping("/phones/update-stock")
+    public ResponseEntity<Object> updateStock (@RequestBody PhoneDto phoneDto){
         try{
-            System.out.println(amount);
-            if (amount <= 0 ){
-                amount = 1;
-            };
-            if (phoneDistributionService.getPhoneByName(phoneName) != null){
-                Phone phone = phoneDistributionService.getPhoneByName(phoneName);
-                if (phoneDistributionService.updateStock(phoneName, amount)){
+            System.out.println(phoneDto.getName());
+            System.out.println(phoneDto.getStock());
+            if (phoneDto.getStock() <= 0 ){
+                return new ResponseEntity<>("You need to buy at least one.. Adjust stock please.", HttpStatus.BAD_REQUEST);
+            }
+            if (phoneDistributionService.getPhoneByName(phoneDto.getName()) != null){
+                Phone phone = phoneDistributionService.getPhoneByName(phoneDto.getName());
+                if (phoneDistributionService.updateStock(phoneDto)){
                     return new ResponseEntity<>("Stock is now: " + (phone.getStock()), HttpStatus.OK);
                 } else {
                     return new ResponseEntity<>("Not enough stock", HttpStatus.BAD_REQUEST);
