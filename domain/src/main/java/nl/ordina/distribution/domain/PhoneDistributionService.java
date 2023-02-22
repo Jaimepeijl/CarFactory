@@ -6,7 +6,7 @@ import nl.ordina.distribution.repository.repository.PhoneDistributionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class PhoneDistributionService {
@@ -19,28 +19,24 @@ public class PhoneDistributionService {
 
     public boolean updateStock (PhoneDto phoneDto) {
 
-        Phone phone = getPhoneByName(phoneDto.getName());
-        int amount = phoneDto.getStock();
-
-        if (phone.getStock() - amount >= phone.getMinStock()){
-            phone.setStock(phone.getStock() - amount);
-            return true;
-        } return false;
-    }
-    public Phone getPhoneByName (String phoneName) {
-        for (int i = 0; i < getPhones().size(); i++) {
-            String phone = getPhones().get(i).getName().toLowerCase();
-            if (Objects.equals(phoneName, phone)){
-                return getPhones().get(i);
-            }
+        phoneDistributionRepository.save(fromDto(phoneDto));
+        return true;
         }
-        return null;
+
+    public Phone fromDto (PhoneDto phoneDto) {
+        Phone phone = new Phone();
+        phone.setName(phoneDto.name());
+        phone.setStock(phoneDto.stock());
+        return phone;
+    }
+    public PhoneDto toDto (Phone phone) {
+        return new PhoneDto(phone.getName(), phone.getStock());
     }
 
     public List<Phone> getPhones(){
-        return phoneDistributionRepository.getPhones();
+        return phoneDistributionRepository.findAll();
     }
     public String getPhonesString(){
-        return phoneDistributionRepository.getPhones().toString();
+        return phoneDistributionRepository.findAll().toString();
     }
 }

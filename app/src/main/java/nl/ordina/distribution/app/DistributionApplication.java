@@ -11,9 +11,6 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = "nl.ordina.distribution.*")
 public class DistributionApplication {
     public static void main(String[] args) {
-        Car.cars();
-        Phone.phones();
-        Laptop.laptops();
         SpringApplication.run(DistributionApplication.class, args);
     }
 }
