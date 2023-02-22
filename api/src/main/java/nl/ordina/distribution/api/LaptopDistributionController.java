@@ -16,9 +16,9 @@ public class LaptopDistributionController {
     }
 
 
-    @GetMapping("/laptops")
-    public String getLaptops(){
-        return laptopDistributionService.getLaptopsString();
-    }
+//    @GetMapping("/laptops")
+//    public String getLaptops(){
+////        return laptopDistributionService.getLaptopsString();
+////    }
 
 }
