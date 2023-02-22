@@ -35,11 +35,11 @@ public class LaptopDistributionService {
     public boolean updateLaptopStock (String laptopModel, int amount){
         int minStock = 5;
         Laptop laptop = getLaptopByModel(laptopModel);
-        if (laptop == getLaptopByModel("MacbookPro")){
-            minStock = 76;
-        } else if (laptop == getLaptopByModel("toyota")) {
+        if (laptop == getLaptopByModel("macbookpro")){
+            minStock = 20;
+        } else if (laptop == getLaptopByModel("optel")) {
             minStock = 30;
-        } else if (laptop == getLaptopByModel("ford")) {
+        } else if (laptop == getLaptopByModel("macbookair")) {
             minStock = 76;
         }
         if (laptop.getStock() - amount >= minStock){

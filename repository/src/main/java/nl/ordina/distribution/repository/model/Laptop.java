@@ -51,7 +51,8 @@ public class Laptop {
     }
     @Override
     public String toString(){
-        return String.format("Brand: %s\n, model: %s\n, colour: %s\n, type: %s\n, stock: %d\n",
-                brand, model, colour, type, stock) + "--------------\n";
+        return String.format("\nBrand: %s\nmodel: %s\ncolour: %s\ntype: %s\n" +
+                        "min. stock: %d\ncurrent stock: %d\nmax. stock: %d\n",
+                brand, model, colour, type,  minStock, stock, maxStock) + "--------------\n";
     }
 }

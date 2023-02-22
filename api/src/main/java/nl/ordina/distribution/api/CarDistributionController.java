@@ -41,9 +41,11 @@ public class CarDistributionController {
                 if (carDistributionService.getCarByName(carName) != null){
                     Car car = carDistributionService.getCarByName(carName);
                 if (carDistributionService.updateStock(carName, amount)){
-                    return new ResponseEntity<>("Stock is now: " + (car.getStock()), HttpStatus.OK);
+                    return new ResponseEntity<>("Current stock for " + car.getBrand() + " " + car.getModel() +
+                            " is now: " + (car.getStock()), HttpStatus.OK);
                 } else {
-                    return new ResponseEntity<>("Not enough stock", HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>(String.format("The current stock for %s %s reached it's minimum, " +
+                            "please notify the procurement department", car.getBrand(), car.getModel()), HttpStatus.BAD_REQUEST);
                 }
         }
         return new ResponseEntity<>("Car doesn't exist", HttpStatus.BAD_REQUEST);

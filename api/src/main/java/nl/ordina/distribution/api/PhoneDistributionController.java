@@ -34,7 +34,7 @@ public class PhoneDistributionController {
             if (phoneDistributionService.getPhoneByName(phoneDto.getName()) != null){
                 Phone phone = phoneDistributionService.getPhoneByName(phoneDto.getName());
                 if (phoneDistributionService.updateStock(phoneDto)){
-                    return new ResponseEntity<>("Stock for " + phone.getName() + "is now: " + (phone.getStock()),
+                    return new ResponseEntity<>("Stock for " + phone.getName() + " is now: " + (phone.getStock()),
                             HttpStatus.OK);
                 } else {
                     return new ResponseEntity<>("Not enough stock for " + phone.getName(),
