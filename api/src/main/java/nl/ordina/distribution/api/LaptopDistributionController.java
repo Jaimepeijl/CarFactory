@@ -29,9 +29,9 @@ public class LaptopDistributionController {
             if (laptopDistributionService.getLaptopByModel(laptopModel) != null){
                 Laptop laptop = laptopDistributionService.getLaptopByModel(laptopModel);
                 if (laptopDistributionService.updateLaptopStock(laptopModel, amount)){
-                    return new ResponseEntity<>("Stock is now: " + (laptop.getStock()), HttpStatus.OK);
+                    return new ResponseEntity<>("Stock for " + laptop.getModel() +" is now: " + (laptop.getStock()), HttpStatus.OK);
                 } else {
-                    return new ResponseEntity<>("Not enough stock", HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>("Not enough stock for " + laptop.getModel(), HttpStatus.BAD_REQUEST);
                 }
             }
             return new ResponseEntity<>("Laptop doesn't exist or is not available at Ordina", HttpStatus.BAD_REQUEST);
