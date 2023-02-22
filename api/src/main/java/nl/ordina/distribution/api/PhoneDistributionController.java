@@ -28,14 +28,17 @@ public class PhoneDistributionController {
             System.out.println(phoneDto.getName());
             System.out.println(phoneDto.getStock());
             if (phoneDto.getStock() <= 0 ){
-                return new ResponseEntity<>("You need to buy at least one.. Adjust stock please.", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("You need to buy at least one.. Adjust stock please.",
+                        HttpStatus.BAD_REQUEST);
             }
             if (phoneDistributionService.getPhoneByName(phoneDto.getName()) != null){
                 Phone phone = phoneDistributionService.getPhoneByName(phoneDto.getName());
                 if (phoneDistributionService.updateStock(phoneDto)){
-                    return new ResponseEntity<>("Stock is now: " + (phone.getStock()), HttpStatus.OK);
+                    return new ResponseEntity<>("Stock for " + phone.getName() + "is now: " + (phone.getStock()),
+                            HttpStatus.OK);
                 } else {
-                    return new ResponseEntity<>("Not enough stock", HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>("Not enough stock for " + phone.getName(),
+                            HttpStatus.BAD_REQUEST);
                 }
             }
             return new ResponseEntity<>("Phone doesn't exist", HttpStatus.BAD_REQUEST);

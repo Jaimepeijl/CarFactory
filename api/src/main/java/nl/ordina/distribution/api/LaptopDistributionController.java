@@ -35,7 +35,7 @@ public class LaptopDistributionController {
                 }
             }
             return new ResponseEntity<>("Laptop doesn't exist or is not available at Ordina", HttpStatus.BAD_REQUEST);
-        } catch (CarNotFoundException e){
+        } catch (LaptopNotFoundException e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
