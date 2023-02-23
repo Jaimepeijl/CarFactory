@@ -1,11 +1,7 @@
 package nl.ordina.distribution.api;
 
 import nl.ordina.distribution.domain.LaptopDistributionService;
-import nl.ordina.distribution.repository.dto.LaptopDto;
-import nl.ordina.distribution.repository.dto.PhoneDto;
-import nl.ordina.distribution.repository.model.Car;
 import nl.ordina.distribution.repository.model.Laptop;
-import nl.ordina.distribution.repository.model.Phone;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +21,7 @@ public class LaptopDistributionController {
             System.out.println(amount);
             if (amount <= 0 ){
                 amount = 1;
-            };
+            }
             if (laptopDistributionService.getLaptopByModel(laptopModel) != null){
                 Laptop laptop = laptopDistributionService.getLaptopByModel(laptopModel);
                 if (laptopDistributionService.updateLaptopStock(laptopModel, amount)){
