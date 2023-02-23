@@ -3,7 +3,6 @@ package nl.ordina.distribution.api;
 import nl.ordina.distribution.domain.PhoneDistributionService;
 import nl.ordina.distribution.repository.dto.NewPhoneDto;
 import nl.ordina.distribution.repository.dto.PhoneDto;
-import nl.ordina.distribution.repository.model.Phone;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +33,8 @@ public class PhoneDistributionController {
     @PutMapping("/phones/update-stock")
     public ResponseEntity<Object> updateStock (@RequestBody @Valid PhoneDto phoneDto){
 
-        if (phoneDistributionService.updateStock(phoneDto)){
-                    return new ResponseEntity<>("Stock for " + phoneDto.name() + " is now: " + (phoneDto.stock()),
+        if (phoneDistributionService.updateStock(phoneDto) > 0){
+                    return new ResponseEntity<>("Stock for " + phoneDto.name() + " is now: " + (phoneDistributionService.updateStock(phoneDto)),
                             HttpStatus.OK);
                 } else {
                     return new ResponseEntity<>("Not enough stock for " + phoneDto.name(),
