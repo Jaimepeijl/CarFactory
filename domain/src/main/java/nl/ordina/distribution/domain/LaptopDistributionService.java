@@ -1,7 +1,4 @@
 package nl.ordina.distribution.domain;
-
-import nl.ordina.distribution.repository.dto.LaptopDto;
-import nl.ordina.distribution.repository.model.Car;
 import nl.ordina.distribution.repository.model.Laptop;
 import nl.ordina.distribution.repository.repository.LaptopDistributionRepository;
 import org.springframework.stereotype.Service;
