@@ -31,8 +31,8 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>9.15.0</version>
         </dependency>
+
     </dependencies>
 
     <parent>

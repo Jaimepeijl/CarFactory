@@ -1,6 +1,8 @@
 package nl.ordina.distribution.repository.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
@@ -9,28 +11,18 @@ import java.util.ArrayList;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Phone {
     @Id
     private String name;
-    private String colour;
+    private String color;
     private int cameras;
     private int stock;
     private int minStock;
     private int maxStock;
     private static ArrayList<Phone> phones = new ArrayList<>();
-
-    public Phone() {
-    }
-
-    public Phone(String name, String colour, int cameras, int stock, int minStock, int maxStock) {
-        this.name = name;
-        this.colour = colour;
-        this.cameras = cameras;
-        this.stock = stock;
-        this.minStock = minStock;
-        this.maxStock = maxStock;
-    }
 
     public static void addPhone (Phone phone){
         if (phone != null){
@@ -44,7 +36,7 @@ public class Phone {
 
     @Override
     public String toString() {
-        return String.format("name: %s,\ncolour: %s,\ncameras: %s,\nstock: %s,\n", name, colour, cameras, stock) +
+        return String.format("name: %s,\ncolour: %s,\ncameras: %s,\nstock: %s,\n", name, color, cameras, stock) +
                 "--------------\n";
     }
 }
