@@ -14,22 +14,30 @@ public @Data class Car {
     private String colour;
     private String type;
     private int stock;
+    private int minStock;
+    private int maxStock;
     private static ArrayList<Car> cars = new ArrayList<>();
 
     public Car() {
     }
 
-    public Car(String brand, String model, String colour, String type, int stock) {
+    public Car(String brand, String model, String colour, String type, int stock, int minStock, int maxStock) {
         this.brand = brand;
         this.model = model;
         this.colour = colour;
         this.type = type;
         this.stock = stock;
+        this.minStock = minStock;
+        this.maxStock = maxStock;
     }
+
     public static void cars (){
-        Car tesla = new Car("Tesla", "Model 3", "Black", "Electric", 10);
-        Car toyota = new Car("Toyota", "Corolla", "Grey", "Hybrid", 25);
-        Car ford = new Car("Ford", "Fiesta", "Rood", "Benzine", 45);
+        Car tesla = new Car("Tesla", "Model 3SXY", "Black", "Electric",
+                3, 2, 4);
+        Car toyota = new Car("Toyota", "Corolla", "Grey", "Hybrid",
+                13, 1, 18);
+        Car ford = new Car("Ford", "Fiesta", "Rood", "Benzine",
+                18, 4, 20);
         Car.addCar(tesla);
         Car.addCar(toyota);
         Car.addCar(ford);
@@ -45,8 +53,9 @@ public @Data class Car {
     @Override
     public String toString() {
 
-        return String.format("brand: %s,\nmodel: %s,\ncolour: %s\ntype: %s\nstock: %s\n",
-                brand, model, colour, type,stock) + "--------------\n";
+        return String.format("brand: %s,\nmodel: %s,\ncolour: %s\ntype: %s\n" +
+                        "min. stock: %s\ncurrent stock: %d\nmax. stock: %d\n",
+                brand, model, colour, type, minStock, stock, maxStock) + "--------------\n";
     }
 
     public static ArrayList<Car> getCars() {

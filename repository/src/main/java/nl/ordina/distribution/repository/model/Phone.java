@@ -52,7 +52,8 @@ public class Phone {
 
     @Override
     public String toString() {
-        return String.format("name: %s,\ncolour: %s,\ncameras: %s,\nstock: %s,\n", name, colour, cameras, stock) +
+        return String.format("name: %s,\ncolour: %s,\ncameras: %s\nmin. stock: %s,\ncurrent stock: %s,\nmax. stock: %s\n",
+                name, colour, cameras, minStock, stock, maxStock) +
                 "--------------\n";
     }
 }
