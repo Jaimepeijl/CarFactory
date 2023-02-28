@@ -1,11 +1,13 @@
 package nl.ordina.distribution.api;
 
 import nl.ordina.distribution.domain.PhoneDistributionService;
+import nl.ordina.distribution.repository.dto.NewPhoneDto;
 import nl.ordina.distribution.repository.dto.PhoneDto;
-import nl.ordina.distribution.repository.model.Phone;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @CrossOrigin
@@ -22,26 +24,25 @@ public class PhoneDistributionController {
         return phoneDistributionService.getPhonesString();
     }
 
+    @PostMapping("/new")
+    public ResponseEntity<Object> newPhone (@RequestBody @Valid NewPhoneDto newPhoneDto){
+        this.phoneDistributionService.save(newPhoneDto);
+        return new ResponseEntity<>("Added new " + newPhoneDto, HttpStatus.OK);
+    }
+
     @PutMapping("/phones/update-stock")
-    public ResponseEntity<Object> updateStock (@RequestBody PhoneDto phoneDto){
-        try{
-            if (phoneDto.getStock() <= 0 ){
-                return new ResponseEntity<>("You need to buy at least one.. Adjust stock please.",
+    public ResponseEntity<Object> updateStock (@RequestBody @Valid PhoneDto phoneDto){
+
+        int stockCode = phoneDistributionService.updateStock(phoneDto);
+        if (stockCode > 0){
+                    return new ResponseEntity<>("Stock for " + phoneDto.name() + " is now: " + (stockCode),
+                            HttpStatus.OK);
+                } else if(stockCode < 0) {
+            return new ResponseEntity<>("Did not find phone '" + phoneDto.name() + "'",
+                    HttpStatus.BAD_REQUEST);
+        } else {
+                return new ResponseEntity<>("Not enough stock for " + phoneDto.name(),
                         HttpStatus.BAD_REQUEST);
             }
-            if (phoneDistributionService.getPhoneByName(phoneDto.getName()) != null){
-                Phone phone = phoneDistributionService.getPhoneByName(phoneDto.getName());
-                if (phoneDistributionService.updateStock(phoneDto)){
-                    return new ResponseEntity<>("Stock for " + phone.getName() + " is now: " + (phone.getStock()),
-                            HttpStatus.OK);
-                } else {
-                    return new ResponseEntity<>("Not enough stock for " + phone.getName(),
-                            HttpStatus.BAD_REQUEST);
-                }
-            }
-            return new ResponseEntity<>("Phone doesn't exist", HttpStatus.BAD_REQUEST);
-        } catch (CarNotFoundException e){
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
-}
