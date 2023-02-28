@@ -22,21 +22,10 @@ public class Phone {
     private int stock;
     private int minStock;
     private int maxStock;
-    private static ArrayList<Phone> phones = new ArrayList<>();
-
-    public static void addPhone (Phone phone){
-        if (phone != null){
-            phones.add(phone);
-        }
-    }
-
-    public static ArrayList<Phone> getPhones() {
-        return phones;
-    }
 
     @Override
     public String toString() {
-        return String.format("name: %s,\ncolour: %s,\ncameras: %s,\nstock: %s,\n", name, color, cameras, stock) +
+        return String.format("name: %s,\ncolour: %s,\ncameras: %s,\nstock: %s,\nminStock: %s, \nmaxStock: %s \n", name, color, cameras, stock, minStock, maxStock) +
                 "--------------\n";
     }
 }

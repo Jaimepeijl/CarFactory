@@ -19,10 +19,14 @@ public class PhoneDistributionService {
 
     public int updateStock (PhoneDto phoneDto) {
         int amount = phoneDto.stock();
-        if (phoneDistributionRepository.findById(phoneDto.name()).isPresent()){
-            Phone phone = getPhoneByName(phoneDto.name());
-            phoneDistributionRepository.save(phone).setStock(phone.getStock() - amount);
-            return phone.getStock() - amount;
+        if (phoneDistributionRepository.existsById(phoneDto.name().toLowerCase())){
+            Phone phone = getPhoneByName(phoneDto.name().toLowerCase());
+            if (phone.getStock() - amount < phone.getMinStock()){
+                return 0;
+            }
+            phone.setStock(phone.getStock() - amount);
+            phoneDistributionRepository.save(phone);
+            return phone.getStock();
         }
         return -1;
     }
@@ -37,8 +41,8 @@ public class PhoneDistributionService {
 
     public Phone fromDto (PhoneDto phoneDto) {
         Phone phone = new Phone();
-        phone.setName(phoneDto.name());
-        phone.setStock(phone.getStock() - phoneDto.stock());
+        phone.setName(phoneDto.name().toLowerCase());
+        phone.setStock(phone.getStock());
         return phone;
     }
     public Phone fromNewDto (NewPhoneDto newPhoneDto) {

@@ -33,12 +33,16 @@ public class PhoneDistributionController {
     @PutMapping("/phones/update-stock")
     public ResponseEntity<Object> updateStock (@RequestBody @Valid PhoneDto phoneDto){
 
-        if (phoneDistributionService.updateStock(phoneDto) > 0){
-                    return new ResponseEntity<>("Stock for " + phoneDto.name() + " is now: " + (phoneDistributionService.updateStock(phoneDto)),
+        int stockCode = phoneDistributionService.updateStock(phoneDto);
+        if (stockCode > 0){
+                    return new ResponseEntity<>("Stock for " + phoneDto.name() + " is now: " + (stockCode),
                             HttpStatus.OK);
-                } else {
-                    return new ResponseEntity<>("Not enough stock for " + phoneDto.name(),
-                            HttpStatus.BAD_REQUEST);
-                }
+                } else if(stockCode < 0) {
+            return new ResponseEntity<>("Did not find phone '" + phoneDto.name() + "'",
+                    HttpStatus.BAD_REQUEST);
+        } else {
+                return new ResponseEntity<>("Not enough stock for " + phoneDto.name(),
+                        HttpStatus.BAD_REQUEST);
+            }
+        }
     }
-}
