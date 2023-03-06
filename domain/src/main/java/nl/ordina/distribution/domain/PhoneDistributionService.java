@@ -47,8 +47,8 @@ public class PhoneDistributionService {
     }
     public Phone fromNewDto (NewPhoneDto newPhoneDto) {
         Phone phone = new Phone();
-        phone.setName(newPhoneDto.name());
-        phone.setColor(newPhoneDto.color());
+        phone.setName(newPhoneDto.name().toLowerCase());
+        phone.setColor(newPhoneDto.color().toLowerCase());
         phone.setCameras(newPhoneDto.cameras());
         phone.setStock(newPhoneDto.stock());
         phone.setMinStock(newPhoneDto.minStock());

@@ -24,10 +24,13 @@ public class PhoneDistributionController {
         return phoneDistributionService.getPhonesString();
     }
 
-    @PostMapping("/new")
+    @PostMapping("/phones/new")
     public ResponseEntity<Object> newPhone (@RequestBody @Valid NewPhoneDto newPhoneDto){
         this.phoneDistributionService.save(newPhoneDto);
-        return new ResponseEntity<>("Added new " + newPhoneDto, HttpStatus.OK);
+        if (newPhoneDto.stock() == 1){
+            return new ResponseEntity<>("Successfully added " + newPhoneDto.stock() + " " + newPhoneDto.name() + " phone", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Successfully added " + newPhoneDto.stock() + " " + newPhoneDto.name() + " phones", HttpStatus.OK);
     }
 
     @PutMapping("/phones/update-stock")

@@ -1,19 +1,7 @@
 package nl.ordina.distribution.repository.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
-@Getter
-@Setter
-public class CarDto {
-    private String name;
-    private int stock;
-
-    public CarDto() {
-    }
-
-    public CarDto(String name, int stock) {
-        this.name = name;
-        this.stock = stock;
-    }
+public record CarDto (@NotBlank String name, @Min(0) int stock){
 }
