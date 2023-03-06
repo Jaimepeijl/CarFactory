@@ -5,7 +5,6 @@ import nl.ordina.distribution.repository.dto.PhoneDto;
 import nl.ordina.distribution.repository.model.Phone;
 import nl.ordina.distribution.repository.repository.PhoneDistributionRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
