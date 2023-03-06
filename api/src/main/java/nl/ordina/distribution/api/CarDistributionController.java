@@ -1,14 +1,13 @@
 package nl.ordina.distribution.api;
 
 import nl.ordina.distribution.domain.CarDistributionService;
-import nl.ordina.distribution.repository.model.Car;
-import nl.ordina.distribution.repository.model.Laptop;
+import nl.ordina.distribution.repository.dto.CarDto;
+import nl.ordina.distribution.repository.dto.NewCarDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import javax.validation.Valid;
 
 @RestController
 @CrossOrigin
@@ -19,39 +18,35 @@ public class CarDistributionController {
     }
 
     @GetMapping("/")
-    protected String showHomeScreen(Model model) {
+    protected String showHomeScreen() {
         return "homeScreen";
     }
 
+    @PostMapping("/cars/new")
+    public ResponseEntity<Object> newPhone (@RequestBody @Valid NewCarDto newCarDto){
+        this.carDistributionService.save(newCarDto);
+        if (newCarDto.stock() == 1){
+            return new ResponseEntity<>("Successfully added " + newCarDto.stock() + " " + newCarDto.brand()  + " " + newCarDto.model() + " car", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Successfully added " + newCarDto.stock() + " " + newCarDto.brand() + " " + newCarDto.model() + " cars", HttpStatus.OK);
+    }
+
     @GetMapping("/cars")
-    public String getCars(Model model){
-//        model.addAttribute("Tesla", tesla);
-//        model.addAttribute("Toyota", toyota);
-//        model.addAttribute("Ford", ford);
-//        model.addAttribute("cars", Car.getCars());
+    public String getCars(){
         return carDistributionService.getCarsString();
     }
-    @PutMapping("/update-stock/{carName}/{amount}")
-    public ResponseEntity<Object> updateStock (@PathVariable String carName, @PathVariable int amount){
-        try{
-            System.out.println(amount);
-            if (amount <= 0 ){
-                amount = 1;
-            };
-                if (carDistributionService.getCarByName(carName) != null){
-                    Car car = carDistributionService.getCarByName(carName);
-                if (carDistributionService.updateStock(carName, amount)){
-                    return new ResponseEntity<>("Current stock for " + car.getBrand() + " " + car.getModel() +
-                            " is now: " + (car.getStock()), HttpStatus.OK);
+
+    @PutMapping("/cars/update-stock")
+    public ResponseEntity<Object> updateStock (@RequestBody @Valid CarDto carDto){
+        int stockCode = carDistributionService.updateStock(carDto);
+        if (stockCode > 0) {
+            return new ResponseEntity<>("Current stock for " + carDto.name() + " is now: " + stockCode, HttpStatus.OK);
+        } else if (stockCode < 0) {
+            return new ResponseEntity<>("Did not find car '" + carDto.name() + "'", HttpStatus.BAD_REQUEST);
                 } else {
-                    return new ResponseEntity<>(String.format("The current stock for %s %s reached it's minimum, " +
-                            "please notify the procurement department", car.getBrand(), car.getModel()), HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>(String.format("The current stock for %s reached it's minimum, " +
+                            "please notify the procurement department", carDto.name()), HttpStatus.BAD_REQUEST);
                 }
-        }
-        return new ResponseEntity<>("Car doesn't exist", HttpStatus.BAD_REQUEST);
-        } catch (CarNotFoundException e){
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
-        }
     }
 
 }
