@@ -18,8 +18,8 @@ public class CarDistributionService {
 
     public int updateStock(CarDto carDto){
         int amount = carDto.stock();
-        if (carDistributionRepository.existsById(carDto.name().toLowerCase())){
-            Car car = getCarByName(carDto.name().toLowerCase());
+        if (carDistributionRepository.findCarByBrandEqualsIgnoreCase(carDto.name()) != null){
+            Car car = getCarByName(carDto.name());
             if (car.getStock() - amount < car.getMinStock()){
                 return 0;
             }
@@ -35,17 +35,17 @@ public class CarDistributionService {
     }
     public Car fromNewDto (NewCarDto newCarDto){
         Car car = new Car();
-        car.setBrand(newCarDto.brand().toLowerCase());
-        car.setModel(newCarDto.model().toLowerCase());
-        car.setColour(newCarDto.colour().toLowerCase());
-        car.setType(newCarDto.type().toLowerCase());
+        car.setBrand(newCarDto.brand());
+        car.setModel(newCarDto.model());
+        car.setColour(newCarDto.colour());
+        car.setType(newCarDto.type());
         car.setStock(newCarDto.stock());
         car.setMinStock(newCarDto.minStock());
         car.setMaxStock(newCarDto.maxStock());
         return car;
     }
     public Car getCarByName(String carName){
-        return carDistributionRepository.getReferenceById(carName);
+        return carDistributionRepository.findCarByBrandEqualsIgnoreCase(carName);
     }
 
     public List<Car> getCars(){
