@@ -1,6 +1,5 @@
 package nl.ordina.distribution.domain;
 
-import nl.ordina.distribution.repository.dto.NewPhoneDto;
 import nl.ordina.distribution.repository.dto.PhoneDto;
 import nl.ordina.distribution.repository.model.Phone;
 import nl.ordina.distribution.repository.repository.PhoneDistributionRepository;
@@ -30,10 +29,6 @@ public class PhoneDistributionService {
         return -1;
     }
 
-    public boolean save (NewPhoneDto newPhoneDto){
-        phoneDistributionRepository.save(fromNewDto(newPhoneDto));
-        return true;
-    }
     public Phone getPhoneByName(String phoneName){
         return phoneDistributionRepository.getReferenceById(phoneName);
     }
@@ -42,16 +37,6 @@ public class PhoneDistributionService {
         Phone phone = new Phone();
         phone.setName(phoneDto.name().toLowerCase());
         phone.setStock(phone.getStock());
-        return phone;
-    }
-    public Phone fromNewDto (NewPhoneDto newPhoneDto) {
-        Phone phone = new Phone();
-        phone.setName(newPhoneDto.name().toLowerCase());
-        phone.setColor(newPhoneDto.color().toLowerCase());
-        phone.setCameras(newPhoneDto.cameras());
-        phone.setStock(newPhoneDto.stock());
-        phone.setMinStock(newPhoneDto.minStock());
-        phone.setMaxStock(newPhoneDto.maxStock());
         return phone;
     }
 

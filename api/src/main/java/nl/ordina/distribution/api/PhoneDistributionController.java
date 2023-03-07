@@ -1,7 +1,6 @@
 package nl.ordina.distribution.api;
 
 import nl.ordina.distribution.domain.PhoneDistributionService;
-import nl.ordina.distribution.repository.dto.NewPhoneDto;
 import nl.ordina.distribution.repository.dto.PhoneDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,15 +21,6 @@ public class PhoneDistributionController {
     @GetMapping("/phones")
     public String getPhones() {
         return phoneDistributionService.getPhonesString();
-    }
-
-    @PostMapping("/phones/new")
-    public ResponseEntity<Object> newPhone (@RequestBody @Valid NewPhoneDto newPhoneDto){
-        this.phoneDistributionService.save(newPhoneDto);
-        if (newPhoneDto.stock() == 1){
-            return new ResponseEntity<>("Successfully added " + newPhoneDto.stock() + " " + newPhoneDto.name() + " phone", HttpStatus.OK);
-        }
-        return new ResponseEntity<>("Successfully added " + newPhoneDto.stock() + " " + newPhoneDto.name() + " phones", HttpStatus.OK);
     }
 
     @PutMapping("/phones/update-stock")
