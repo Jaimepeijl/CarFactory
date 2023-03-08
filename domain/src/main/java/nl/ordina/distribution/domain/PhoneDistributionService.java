@@ -1,6 +1,5 @@
 package nl.ordina.distribution.domain;
 
-import nl.ordina.distribution.repository.dto.NewPhoneDto;
 import nl.ordina.distribution.repository.dto.PhoneDto;
 import nl.ordina.distribution.repository.model.Phone;
 import nl.ordina.distribution.repository.repository.PhoneDistributionRepository;
@@ -18,8 +17,8 @@ public class PhoneDistributionService {
 
     public int updateStock (PhoneDto phoneDto) {
         int amount = phoneDto.stock();
-        if (phoneDistributionRepository.findPhoneByNameEqualsIgnoreCase(phoneDto.name()) != null){
-            Phone phone = getPhoneByName(phoneDto.name());
+        if (phoneDistributionRepository.existsById(phoneDto.name().toLowerCase())){
+            Phone phone = getPhoneByName(phoneDto.name().toLowerCase());
             if (phone.getStock() - amount < phone.getMinStock()){
                 return 0;
             }
@@ -30,28 +29,14 @@ public class PhoneDistributionService {
         return -1;
     }
 
-    public boolean save (NewPhoneDto newPhoneDto){
-        phoneDistributionRepository.save(fromNewDto(newPhoneDto));
-        return true;
-    }
     public Phone getPhoneByName(String phoneName){
-        return phoneDistributionRepository.findPhoneByNameEqualsIgnoreCase(phoneName);
+        return phoneDistributionRepository.getReferenceById(phoneName);
     }
 
     public Phone fromDto (PhoneDto phoneDto) {
         Phone phone = new Phone();
-        phone.setName(phoneDto.name());
+        phone.setName(phoneDto.name().toLowerCase());
         phone.setStock(phone.getStock());
-        return phone;
-    }
-    public Phone fromNewDto (NewPhoneDto newPhoneDto) {
-        Phone phone = new Phone();
-        phone.setName(newPhoneDto.name());
-        phone.setColor(newPhoneDto.color());
-        phone.setCameras(newPhoneDto.cameras());
-        phone.setStock(newPhoneDto.stock());
-        phone.setMinStock(newPhoneDto.minStock());
-        phone.setMaxStock(newPhoneDto.maxStock());
         return phone;
     }
 

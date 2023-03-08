@@ -2,7 +2,6 @@ package nl.ordina.distribution.api;
 
 import nl.ordina.distribution.domain.CarDistributionService;
 import nl.ordina.distribution.repository.dto.CarDto;
-import nl.ordina.distribution.repository.dto.NewCarDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,15 +19,6 @@ public class CarDistributionController {
     @GetMapping("/")
     protected String showHomeScreen() {
         return "homeScreen";
-    }
-
-    @PostMapping("/cars/new")
-    public ResponseEntity<Object> newPhone (@RequestBody @Valid NewCarDto newCarDto){
-        this.carDistributionService.save(newCarDto);
-        if (newCarDto.stock() == 1){
-            return new ResponseEntity<>("Successfully added " + newCarDto.stock() + " " + newCarDto.brand()  + " " + newCarDto.model() + " car", HttpStatus.OK);
-        }
-        return new ResponseEntity<>("Successfully added " + newCarDto.stock() + " " + newCarDto.brand() + " " + newCarDto.model() + " cars", HttpStatus.OK);
     }
 
     @GetMapping("/cars")

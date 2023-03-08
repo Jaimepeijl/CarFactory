@@ -1,7 +1,6 @@
 package nl.ordina.distribution.domain;
 
 import nl.ordina.distribution.repository.dto.CarDto;
-import nl.ordina.distribution.repository.dto.NewCarDto;
 import nl.ordina.distribution.repository.repository.CarDistributionRepository;
 import nl.ordina.distribution.repository.model.Car;
 import org.springframework.stereotype.Service;
@@ -18,8 +17,8 @@ public class CarDistributionService {
 
     public int updateStock(CarDto carDto){
         int amount = carDto.stock();
-        if (carDistributionRepository.findCarByBrandEqualsIgnoreCase(carDto.name()) != null){
-            Car car = getCarByName(carDto.name());
+        if (carDistributionRepository.existsById(carDto.name().toLowerCase())){
+            Car car = getCarByName(carDto.name().toLowerCase());
             if (car.getStock() - amount < car.getMinStock()){
                 return 0;
             }
@@ -29,23 +28,9 @@ public class CarDistributionService {
         }
         return -1;
     }
-    public boolean save (NewCarDto newCarDto) {
-        carDistributionRepository.save(fromNewDto(newCarDto));
-        return true;
-    }
-    public Car fromNewDto (NewCarDto newCarDto){
-        Car car = new Car();
-        car.setBrand(newCarDto.brand());
-        car.setModel(newCarDto.model());
-        car.setColour(newCarDto.colour());
-        car.setType(newCarDto.type());
-        car.setStock(newCarDto.stock());
-        car.setMinStock(newCarDto.minStock());
-        car.setMaxStock(newCarDto.maxStock());
-        return car;
-    }
+
     public Car getCarByName(String carName){
-        return carDistributionRepository.findCarByBrandEqualsIgnoreCase(carName);
+        return carDistributionRepository.getReferenceById(carName);
     }
 
     public List<Car> getCars(){
