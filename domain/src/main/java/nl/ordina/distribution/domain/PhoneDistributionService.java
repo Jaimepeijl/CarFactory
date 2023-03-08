@@ -8,7 +8,6 @@ import java.util.List;
 
 @Service
 public class PhoneDistributionService {
-
     private final PhoneDistributionRepository phoneDistributionRepository;
 
     public PhoneDistributionService(PhoneDistributionRepository phoneDistributionRepository) {

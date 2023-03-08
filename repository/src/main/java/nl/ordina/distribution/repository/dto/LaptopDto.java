@@ -1,19 +1,9 @@
 package nl.ordina.distribution.repository.dto;
 
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-public class LaptopDto {
-    private String model;
-    private int stock;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
-    public LaptopDto() {
-    }
-
-    public LaptopDto(String model, int stock) {
-        this.model = model;
-        this.stock = stock;
-    }
+public record LaptopDto (@NotBlank String model, @Min(0) int stock) {
 }
+
