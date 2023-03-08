@@ -17,8 +17,8 @@ public class CarDistributionService {
 
     public int updateStock(CarDto carDto){
         int amount = carDto.stock();
-        if (carDistributionRepository.existsById(carDto.name().toLowerCase())){
-            Car car = getCarByName(carDto.name().toLowerCase());
+        if (carDistributionRepository.findCarByBrandEqualsIgnoreCase(carDto.name()) != null){
+            Car car = getCarByName(carDto.name());
             if (car.getStock() - amount < car.getMinStock()){
                 return 0;
             }
@@ -30,7 +30,7 @@ public class CarDistributionService {
     }
 
     public Car getCarByName(String carName){
-        return carDistributionRepository.getReferenceById(carName);
+        return carDistributionRepository.findCarByBrandEqualsIgnoreCase(carName);
     }
 
     public List<Car> getCars(){

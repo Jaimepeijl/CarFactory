@@ -17,8 +17,8 @@ public class PhoneDistributionService {
 
     public int updateStock (PhoneDto phoneDto) {
         int amount = phoneDto.stock();
-        if (phoneDistributionRepository.existsById(phoneDto.name().toLowerCase())){
-            Phone phone = getPhoneByName(phoneDto.name().toLowerCase());
+        if (phoneDistributionRepository.findPhoneByNameEqualsIgnoreCase(phoneDto.name()) != null){
+            Phone phone = getPhoneByName(phoneDto.name());
             if (phone.getStock() - amount < phone.getMinStock()){
                 return 0;
             }
@@ -30,7 +30,7 @@ public class PhoneDistributionService {
     }
 
     public Phone getPhoneByName(String phoneName){
-        return phoneDistributionRepository.getReferenceById(phoneName);
+        return phoneDistributionRepository.findPhoneByNameEqualsIgnoreCase(phoneName);
     }
 
     public Phone fromDto (PhoneDto phoneDto) {
