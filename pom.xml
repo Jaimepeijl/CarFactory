@@ -4,7 +4,6 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>nl.ordina.carfactory</groupId>
     <artifactId>parent</artifactId>
-    <version>1.0</version>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -123,6 +122,7 @@
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
+                <version>42.2.14</version>
                 <scope>runtime</scope>
             </dependency>
         </dependencies>

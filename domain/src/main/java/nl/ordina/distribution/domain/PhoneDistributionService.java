@@ -18,8 +18,8 @@ public class PhoneDistributionService {
 
     public int updateStock (PhoneDto phoneDto) {
         int amount = phoneDto.stock();
-        if (phoneDistributionRepository.existsById(phoneDto.name().toLowerCase())){
-            Phone phone = getPhoneByName(phoneDto.name().toLowerCase());
+        if (phoneDistributionRepository.findPhoneByNameEqualsIgnoreCase(phoneDto.name()) != null){
+            Phone phone = getPhoneByName(phoneDto.name());
             if (phone.getStock() - amount < phone.getMinStock()){
                 return 0;
             }
@@ -35,19 +35,19 @@ public class PhoneDistributionService {
         return true;
     }
     public Phone getPhoneByName(String phoneName){
-        return phoneDistributionRepository.getReferenceById(phoneName);
+        return phoneDistributionRepository.findPhoneByNameEqualsIgnoreCase(phoneName);
     }
 
     public Phone fromDto (PhoneDto phoneDto) {
         Phone phone = new Phone();
-        phone.setName(phoneDto.name().toLowerCase());
+        phone.setName(phoneDto.name());
         phone.setStock(phone.getStock());
         return phone;
     }
     public Phone fromNewDto (NewPhoneDto newPhoneDto) {
         Phone phone = new Phone();
-        phone.setName(newPhoneDto.name().toLowerCase());
-        phone.setColor(newPhoneDto.color().toLowerCase());
+        phone.setName(newPhoneDto.name());
+        phone.setColor(newPhoneDto.color());
         phone.setCameras(newPhoneDto.cameras());
         phone.setStock(newPhoneDto.stock());
         phone.setMinStock(newPhoneDto.minStock());
