@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -19,8 +20,8 @@ public class LaptopDistributionController {
     }
 
     @GetMapping("/laptops")
-    public String getLaptops(){
-        return laptopDistributionService.getLaptopsString();
+    public List<Laptop> getLaptops(){
+        return laptopDistributionService.getLaptops();
     }
 
 

@@ -2,11 +2,13 @@ package nl.ordina.distribution.api;
 
 import nl.ordina.distribution.domain.CarDistributionService;
 import nl.ordina.distribution.repository.dto.CarDto;
+import nl.ordina.distribution.repository.model.Car;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -22,8 +24,8 @@ public class CarDistributionController {
     }
 
     @GetMapping("/cars")
-    public String getCars(){
-        return carDistributionService.getCarsString();
+    public List<Car> getCars(){
+        return carDistributionService.getCars();
     }
 
     @PutMapping("/cars/update-stock")

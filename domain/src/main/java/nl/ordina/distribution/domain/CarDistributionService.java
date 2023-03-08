@@ -36,7 +36,4 @@ public class CarDistributionService {
     public List<Car> getCars(){
         return carDistributionRepository.findAll();
     }
-    public String getCarsString(){
-        return carDistributionRepository.findAll().toString();
-    }
 }

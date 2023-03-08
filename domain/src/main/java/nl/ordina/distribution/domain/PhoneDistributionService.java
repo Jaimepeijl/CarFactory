@@ -42,7 +42,4 @@ public class PhoneDistributionService {
     public List<Phone> getPhones(){
         return phoneDistributionRepository.findAll();
     }
-    public String getPhonesString(){
-        return phoneDistributionRepository.findAll().toString();
-    }
 }
