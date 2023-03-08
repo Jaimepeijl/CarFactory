@@ -17,14 +17,13 @@ public class Phone {
     @Id
     private String name;
     private String color;
+    private String segment;
+    private String memory;
     private int cameras;
+    private long cost;
     private int stock;
     private int minStock;
     private int maxStock;
+    private int chipsPer;
 
-    @Override
-    public String toString() {
-        return String.format("name: %s,\ncolour: %s,\ncameras: %s,\nstock: %s,\nminStock: %s, \nmaxStock: %s \n", name, color, cameras, stock, minStock, maxStock) +
-                "--------------\n";
-    }
 }
