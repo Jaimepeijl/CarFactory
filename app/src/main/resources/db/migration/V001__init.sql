@@ -1,11 +1,15 @@
 CREATE TABLE IF NOT EXISTS phone(
 
-                                    name varchar(20) PRIMARY KEY,
-                                    color varchar(20),
-                                    cameras int,
-                                    stock bigint,
-                                    min_stock bigint,
-                                    max_stock bigint
+                                         name varchar(20) PRIMARY KEY,
+                                         color varchar(20),
+                                         segment varchar(20),
+                                         memory varchar(20),
+                                         cameras int,
+                                         cost bigint,
+                                         stock bigint,
+                                         min_stock bigint,
+                                         max_stock bigint,
+                                         chips_per bigint
 
 );
 CREATE TABLE IF NOT EXISTS car(
