@@ -22,6 +22,8 @@ public class Laptop {
     private int stock;
     private int minStock;
     private int maxStock;
+    private int screenInInches;
+    private String processor;
 
     private static ArrayList<Laptop> laptops = new ArrayList<>();
 

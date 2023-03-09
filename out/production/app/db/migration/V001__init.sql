@@ -16,8 +16,11 @@ CREATE TABLE IF NOT EXISTS car(
 
                                   brand varchar(20) PRIMARY KEY,
                                   model varchar(20),
-                                  colour varchar(20),
+                                  color varchar(20),
                                   type varchar(20),
+                                  max_speed_in_Kmph bigint,
+                                  trunk_content_in_liters bigint,
+                                  costs_per_month bigint,
                                   stock bigint,
                                   min_stock bigint,
                                   max_stock bigint
@@ -27,9 +30,12 @@ CREATE TABLE IF NOT EXISTS laptop(
 
                                      brand varchar(20),
                                      model varchar(20) PRIMARY KEY,
-                                     colour varchar(20),
+                                     color varchar(20),
                                      type varchar(20),
                                      stock bigint,
+                                     processor varchar (2),
+                                     screen_width_in_inches bigint,
+                                     depreciation int,
                                      min_stock bigint,
                                      max_stock bigint
 
