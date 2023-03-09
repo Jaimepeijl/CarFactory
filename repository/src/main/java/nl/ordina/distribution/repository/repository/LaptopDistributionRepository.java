@@ -10,4 +10,6 @@ import java.util.ArrayList;
 public interface LaptopDistributionRepository extends JpaRepository <Laptop, String> {
 
     Laptop findLaptopByModelEqualsIgnoreCase(String model);
+
+    Laptop findLaptopByModelEqualsIgnoreCaseAndColourEqualsIgnoreCase(String model, String colour);
 }

@@ -32,6 +32,4 @@ public class Laptop {
     private int screenWidthInInches;
     private String processor;
 
-    private static ArrayList<Laptop> laptops = new ArrayList<>();
-
 }
