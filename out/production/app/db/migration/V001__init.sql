@@ -1,7 +1,8 @@
 CREATE TABLE IF NOT EXISTS phone(
 
-                                         name varchar(20) PRIMARY KEY,
-                                         color varchar(20),
+                                        id uuid PRIMARY KEY,
+                                         name varchar(20) ,
+                                         colour varchar(20),
                                          segment varchar(20),
                                          memory varchar(20),
                                          cameras int,
@@ -14,11 +15,12 @@ CREATE TABLE IF NOT EXISTS phone(
 );
 CREATE TABLE IF NOT EXISTS car(
 
-                                  brand varchar(20) PRIMARY KEY,
+                                  id uuid PRIMARY KEY,
+                                  brand varchar(20),
                                   model varchar(20),
                                   colour varchar(20),
                                   type varchar(20),
-                                  max_speed_in_Kmph bigint,
+                                  max_speed_in_kmph bigint,
                                   trunk_content_in_liters bigint,
                                   costs_per_month bigint,
                                   stock bigint,
