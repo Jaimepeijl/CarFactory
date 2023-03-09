@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS phone(
 
-                                         name varchar(20) PRIMARY KEY,
+                                        id uuid PRIMARY KEY,
+                                         name varchar(20) ,
                                          color varchar(20),
                                          segment varchar(20),
                                          memory varchar(20),
