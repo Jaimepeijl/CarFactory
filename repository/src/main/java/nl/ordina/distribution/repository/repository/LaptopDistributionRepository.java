@@ -11,5 +11,5 @@ public interface LaptopDistributionRepository extends JpaRepository <Laptop, Str
 
     Laptop findLaptopByModelEqualsIgnoreCase(String model);
 
-    Laptop findLaptopByModelEqualsIgnoreCaseAndColourEqualsIgnoreCase(String model, String colour);
+    Laptop findLaptopByModelEqualsIgnoreCaseAndColourEqualsIgnoreCase(String brand, String colour);
 }
