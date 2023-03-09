@@ -27,15 +27,16 @@ public class LaptopDistributionController {
 
     @PutMapping("/laptops/update-stock/")
     public ResponseEntity<Object> updateStock (@RequestBody @Valid LaptopDto laptopDto){
+        Laptop laptop = new Laptop();
         int stockCode = laptopDistributionService.updateStock(laptopDto);
         if (stockCode > 0){
-            return new ResponseEntity<>("Stock for " + laptopDto.model() + " is now: " + (stockCode),
+            return new ResponseEntity<>("Stock for " + laptop.getModel() + " is now: " + (stockCode),
                     HttpStatus.OK);
         } else if(stockCode < 0) {
-            return new ResponseEntity<>("Did not find phone '" + laptopDto.model() + "'",
+            return new ResponseEntity<>("Did not find phone '" + laptop.getModel() + "'",
                     HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity<>("Not enough stock for " + laptopDto.model(),
+            return new ResponseEntity<>("Not enough stock for " + laptop.getModel(),
                     HttpStatus.BAD_REQUEST);
         }
     }

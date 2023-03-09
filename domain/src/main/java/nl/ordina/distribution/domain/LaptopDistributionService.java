@@ -17,8 +17,8 @@ public class LaptopDistributionService {
 
     public int updateStock (LaptopDto laptopDto) {
         int amount = laptopDto.stock();
-        if (laptopDistributionRepository.findLaptopByModelEqualsIgnoreCase(laptopDto.model()) != null){
-            Laptop laptop = getLaptopByModel(laptopDto.model());
+        if (laptopDistributionRepository.existsById(laptopDto.model().toLowerCase())){
+            Laptop laptop = getLaptopByModel(laptopDto.model().toLowerCase());
             if (laptop.getStock() - amount < laptop.getMinStock()){
                 return 0;
             }
@@ -30,7 +30,7 @@ public class LaptopDistributionService {
     }
 
     public Laptop getLaptopByModel(String laptopModel) {
-        return laptopDistributionRepository.findLaptopByModelEqualsIgnoreCase(laptopModel);
+        return laptopDistributionRepository.getReferenceById(laptopModel);
     }
 
     public List<Laptop> getLaptops(){
