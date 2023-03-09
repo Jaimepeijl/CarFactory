@@ -5,6 +5,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
-public record LaptopDto (@Min(0) UUID laptopId, @NotBlank String model, @Min(0) int stock) {
+public record LaptopDto (@NotBlank String model, @Min(0) int stock) {
 }
 

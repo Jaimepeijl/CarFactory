@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PhoneDistributionRepository extends JpaRepository<Phone, String> {
     Phone findPhoneByNameEqualsIgnoreCase(String name);
-    Phone findPhoneByNameEqualsIgnoreCaseAndColorEqualsIgnoreCase(String name, String color);
+    Phone findPhoneByNameEqualsIgnoreCaseAndColourEqualsIgnoreCase(String name, String colour);
 }

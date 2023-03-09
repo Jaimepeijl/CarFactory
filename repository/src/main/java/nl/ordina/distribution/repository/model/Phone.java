@@ -20,7 +20,7 @@ public class Phone {
     @GeneratedValue
     private UUID id;
     private String name;
-    private String color;
+    private String colour;
     private String segment;
     private String memory;
     private int cameras;

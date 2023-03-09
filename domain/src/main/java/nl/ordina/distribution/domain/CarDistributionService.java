@@ -17,6 +17,15 @@ public class CarDistributionService {
 
     public int updateStock(CarDto carDto){
         int amount = carDto.stock();
+        if (carDto.colour() != null){
+            Car car = carDistributionRepository.findCarByBrandEqualsIgnoreCaseAndColourEqualsIgnoreCase(carDto.name(), carDto.colour());
+            if (car.getStock() - amount < car.getMinStock()){
+                return 0;
+            }
+            car.setStock(car.getStock() - amount);
+            carDistributionRepository.save(car);
+            return car.getStock();
+        }
         if (carDistributionRepository.findCarByBrandEqualsIgnoreCase(carDto.name()) != null){
             Car car = getCarByName(carDto.name());
             if (car.getStock() - amount < car.getMinStock()){

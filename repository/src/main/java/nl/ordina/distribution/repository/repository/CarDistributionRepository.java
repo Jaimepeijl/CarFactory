@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CarDistributionRepository extends JpaRepository <Car, String> {
     Car findCarByBrandEqualsIgnoreCase(String brand);
+
+    Car findCarByBrandEqualsIgnoreCaseAndColourEqualsIgnoreCase(String name, String colour);
 }

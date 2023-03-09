@@ -16,8 +16,8 @@ public class PhoneDistributionService {
 
     public int updateStock (PhoneDto phoneDto) {
         int amount = phoneDto.stock();
-        if (phoneDto.color() != null){
-            Phone phone = phoneDistributionRepository.findPhoneByNameEqualsIgnoreCaseAndColorEqualsIgnoreCase(phoneDto.name(), phoneDto.color());
+        if (phoneDto.colour() != null){
+            Phone phone = phoneDistributionRepository.findPhoneByNameEqualsIgnoreCaseAndColourEqualsIgnoreCase(phoneDto.name(), phoneDto.colour());
             if (phone.getStock() - amount < phone.getMinStock()){
                 return 0;
             }
