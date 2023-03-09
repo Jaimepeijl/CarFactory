@@ -16,6 +16,15 @@ public class PhoneDistributionService {
 
     public int updateStock (PhoneDto phoneDto) {
         int amount = phoneDto.stock();
+        if (phoneDto.color() != null){
+            Phone phone = phoneDistributionRepository.findPhoneByNameEqualsIgnoreCaseAndColorEqualsIgnoreCase(phoneDto.name(), phoneDto.color());
+            if (phone.getStock() - amount < phone.getMinStock()){
+                return 0;
+            }
+            phone.setStock(phone.getStock() - amount);
+            phoneDistributionRepository.save(phone);
+            return phone.getStock();
+        }
         if (phoneDistributionRepository.findPhoneByNameEqualsIgnoreCase(phoneDto.name()) != null){
             Phone phone = getPhoneByName(phoneDto.name());
             if (phone.getStock() - amount < phone.getMinStock()){
