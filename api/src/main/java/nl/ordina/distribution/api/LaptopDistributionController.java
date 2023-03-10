@@ -29,7 +29,7 @@ public class LaptopDistributionController {
     public ResponseEntity<Object> updateStock (@RequestBody @Valid LaptopDto laptopDto){
         int stockCode = laptopDistributionService.updateStock(laptopDto);
         if (stockCode > 0){
-            return new ResponseEntity<>("Stock for " + laptopDto.model() + " is now: " + (stockCode),
+            return new ResponseEntity<>((stockCode),
                     HttpStatus.OK);
         } else if(stockCode < 0) {
             return new ResponseEntity<>("Did not find phone '" + laptopDto.model() + "'",

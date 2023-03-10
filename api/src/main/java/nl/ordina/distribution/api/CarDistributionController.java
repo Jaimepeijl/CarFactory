@@ -32,7 +32,7 @@ public class CarDistributionController {
     public ResponseEntity<Object> updateStock (@RequestBody @Valid CarDto carDto){
         int stockCode = carDistributionService.updateStock(carDto);
         if (stockCode > 0) {
-            return new ResponseEntity<>("Current stock for " + carDto.name() + " is now: " + stockCode, HttpStatus.OK);
+            return new ResponseEntity<>(stockCode, HttpStatus.OK);
         } else if (stockCode < 0) {
             return new ResponseEntity<>("Did not find car '" + carDto.name() + "'", HttpStatus.BAD_REQUEST);
                 } else {

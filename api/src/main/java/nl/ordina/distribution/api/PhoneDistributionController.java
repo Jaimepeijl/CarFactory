@@ -30,7 +30,7 @@ public class PhoneDistributionController {
 
         int stockCode = phoneDistributionService.updateStock(phoneDto);
         if (stockCode > 0){
-                    return new ResponseEntity<>("Stock for " + phoneDto.name() + " is now: " + (stockCode),
+                    return new ResponseEntity<>(stockCode,
                             HttpStatus.OK);
                 } else if(stockCode < 0) {
             return new ResponseEntity<>("Did not find phone '" + phoneDto.name() + "'",
