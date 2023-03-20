@@ -1,7 +1,6 @@
 package nl.ordina.distribution.domain;
 
 import nl.ordina.distribution.repository.dto.CarDto;
-import nl.ordina.distribution.repository.dto.CarOrder;
 import nl.ordina.distribution.repository.repository.CarDistributionRepository;
 import nl.ordina.distribution.repository.model.Car;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,7 @@ public class CarDistributionService {
     }
 
     public int updateStock(CarDto carDto){
-        int amount = carDto.stock();
+        int amount = carDto.orderAmount();
         if (carDto.colour() != null){
             Car car = carDistributionRepository.findCarByBrandEqualsIgnoreCaseAndColourEqualsIgnoreCase(carDto.name(), carDto.colour());
             if (car.getStock() - amount < car.getMinStock()){

@@ -49,6 +49,13 @@ class CarDistributionServiceTest {
 
     @Test
     void getCarByName() {
+        String carName = "Tesla";
+        Car car = new Car(UUID.randomUUID(), "Tesla", "Model S3XY", "Metalic grijs", "Elektrisch", 220,380,500,4,2,4);
+        when(carDistributionRepository.findCarByBrandEqualsIgnoreCase(carName)).thenReturn(car);
+
+        Car result = carService.getCarByName(carName);
+
+        assertEquals("Tesla", result.getBrand());
     }
 
     @Test
