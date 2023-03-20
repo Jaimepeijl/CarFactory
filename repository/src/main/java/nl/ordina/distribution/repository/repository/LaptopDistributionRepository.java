@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 @Repository
 public interface LaptopDistributionRepository extends JpaRepository <Laptop, String> {
@@ -12,4 +13,5 @@ public interface LaptopDistributionRepository extends JpaRepository <Laptop, Str
     Laptop findLaptopByModelEqualsIgnoreCase(String model);
 
     Laptop findLaptopByModelEqualsIgnoreCaseAndColourEqualsIgnoreCase(String brand, String colour);
+    Laptop findLaptopById(UUID id);
 }
