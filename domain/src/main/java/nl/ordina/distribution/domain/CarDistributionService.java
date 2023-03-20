@@ -1,6 +1,7 @@
 package nl.ordina.distribution.domain;
 
 import nl.ordina.distribution.repository.dto.CarDto;
+import nl.ordina.distribution.repository.dto.CarOrder;
 import nl.ordina.distribution.repository.repository.CarDistributionRepository;
 import nl.ordina.distribution.repository.model.Car;
 import org.springframework.stereotype.Service;
