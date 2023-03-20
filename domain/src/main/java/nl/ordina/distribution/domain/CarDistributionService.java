@@ -16,22 +16,22 @@ public class CarDistributionService {
     }
 
     public int updateStock(CarDto carDto){
-        int amount = carDto.orderAmount();
+        int orderAmount = carDto.orderAmount();
         if (carDto.colour() != null){
             Car car = carDistributionRepository.findCarByBrandEqualsIgnoreCaseAndColourEqualsIgnoreCase(carDto.name(), carDto.colour());
-            if (car.getStock() - amount < car.getMinStock()){
+            if (car.getStock() - orderAmount < car.getMinStock()){
                 return 0;
             }
-            car.setStock(car.getStock() - amount);
+            car.setStock(car.getStock() - orderAmount);
             carDistributionRepository.save(car);
             return car.getStock();
         }
         if (carDistributionRepository.findCarByBrandEqualsIgnoreCase(carDto.name()) != null){
             Car car = getCarByName(carDto.name());
-            if (car.getStock() - amount < car.getMinStock()){
+            if (car.getStock() - orderAmount < car.getMinStock()){
                 return 0;
             }
-            car.setStock(car.getStock() - amount);
+            car.setStock(car.getStock() - orderAmount);
             carDistributionRepository.save(car);
             return car.getStock();
         }

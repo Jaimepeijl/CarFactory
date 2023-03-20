@@ -16,23 +16,23 @@ public class LaptopDistributionService {
     }
 
     public int updateStock (LaptopDto laptopDto) {
-        int amount = laptopDto.stock();
+        int orderAmount = laptopDto.orderAmount();
         if (laptopDto.colour() != null) {
             Laptop laptop = laptopDistributionRepository.
                     findLaptopByModelEqualsIgnoreCaseAndColourEqualsIgnoreCase(laptopDto.model(), laptopDto.colour());
-            if (laptop.getStock() - amount < laptop.getMinStock()) {
+            if (laptop.getStock() - orderAmount < laptop.getMinStock()) {
                 return 0;
             }
-            laptop.setStock(laptop.getStock() - amount);
+            laptop.setStock(laptop.getStock() - orderAmount);
             laptopDistributionRepository.save(laptop);
             return laptop.getStock();
         }
         if (laptopDistributionRepository.findLaptopByModelEqualsIgnoreCase(laptopDto.model()) != null) {
             Laptop laptop = getLaptopByModel(laptopDto.model());
-            if (laptop.getStock() - amount < laptop.getMinStock()){
+            if (laptop.getStock() - orderAmount < laptop.getMinStock()){
                 return 0;
             }
-            laptop.setStock(laptop.getStock() - amount);
+            laptop.setStock(laptop.getStock() - orderAmount);
             laptopDistributionRepository.save(laptop);
             return laptop.getStock();
         }

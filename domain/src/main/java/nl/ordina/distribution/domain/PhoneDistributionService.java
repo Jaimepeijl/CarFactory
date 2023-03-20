@@ -15,22 +15,22 @@ public class PhoneDistributionService {
     }
 
     public int updateStock (PhoneDto phoneDto) {
-        int amount = phoneDto.stock();
+        int orderAmount = phoneDto.orderAmount();
         if (phoneDto.colour() != null){
             Phone phone = phoneDistributionRepository.findPhoneByNameEqualsIgnoreCaseAndColourEqualsIgnoreCase(phoneDto.name(), phoneDto.colour());
-            if (phone.getStock() - amount < phone.getMinStock()){
+            if (phone.getStock() - orderAmount < phone.getMinStock()){
                 return 0;
             }
-            phone.setStock(phone.getStock() - amount);
+            phone.setStock(phone.getStock() - orderAmount);
             phoneDistributionRepository.save(phone);
             return phone.getStock();
         }
         if (phoneDistributionRepository.findPhoneByNameEqualsIgnoreCase(phoneDto.name()) != null){
             Phone phone = getPhoneByName(phoneDto.name());
-            if (phone.getStock() - amount < phone.getMinStock()){
+            if (phone.getStock() - orderAmount < phone.getMinStock()){
                 return 0;
             }
-            phone.setStock(phone.getStock() - amount);
+            phone.setStock(phone.getStock() - orderAmount);
             phoneDistributionRepository.save(phone);
             return phone.getStock();
         }
