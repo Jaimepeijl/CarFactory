@@ -5,6 +5,7 @@ import nl.ordina.distribution.repository.repository.CarDistributionRepository;
 import nl.ordina.distribution.repository.model.Car;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CarDistributionService {
@@ -17,6 +18,15 @@ public class CarDistributionService {
 
     public int updateStock(CarDto carDto){
         int orderAmount = carDto.orderAmount();
+        if (carDto.uuid() !=  null){
+            Car car = getCarById(carDto.uuid());
+            if (car.getStock() - orderAmount < car.getMinStock()){
+                return 0;
+            }
+            car.setStock(car.getStock() - orderAmount);
+            carDistributionRepository.save(car);
+            return car.getStock();
+        }
         if (carDto.colour() != null){
             Car car = carDistributionRepository.findCarByBrandEqualsIgnoreCaseAndColourEqualsIgnoreCase(carDto.name(), carDto.colour());
             if (car.getStock() - orderAmount < car.getMinStock()){
@@ -40,6 +50,9 @@ public class CarDistributionService {
 
     public Car getCarByName(String carName){
         return carDistributionRepository.findCarByBrandEqualsIgnoreCase(carName);
+    }
+    public Car getCarById(UUID id){
+        return carDistributionRepository.findCarById(id);
     }
 
     public List<Car> getCars(){

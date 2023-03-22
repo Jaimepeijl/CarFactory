@@ -6,6 +6,7 @@ import nl.ordina.distribution.repository.repository.LaptopDistributionRepository
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class LaptopDistributionService {
@@ -17,6 +18,15 @@ public class LaptopDistributionService {
 
     public int updateStock (LaptopDto laptopDto) {
         int orderAmount = laptopDto.orderAmount();
+        if (laptopDto.uuid() !=  null){
+            Laptop laptop = getLaptopById(laptopDto.uuid());
+            if (laptop.getStock() - orderAmount < laptop.getMinStock()){
+                return 0;
+            }
+            laptop.setStock(laptop.getStock() - orderAmount);
+            laptopDistributionRepository.save(laptop);
+            return laptop.getStock();
+        }
         if (laptopDto.colour() != null) {
             Laptop laptop = laptopDistributionRepository.
                     findLaptopByModelEqualsIgnoreCaseAndColourEqualsIgnoreCase(laptopDto.model(), laptopDto.colour());
@@ -41,6 +51,9 @@ public class LaptopDistributionService {
 
     public Laptop getLaptopByModel(String laptopModel) {
         return laptopDistributionRepository.findLaptopByModelEqualsIgnoreCase(laptopModel);
+    }
+    public Laptop getLaptopById(UUID id){
+        return laptopDistributionRepository.findLaptopById(id);
     }
 
     public List<Laptop> getLaptops(){
