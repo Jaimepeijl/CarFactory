@@ -41,9 +41,5 @@ public class CarDistributionController {
                             "please notify the procurement department", carDto.name()), HttpStatus.BAD_REQUEST);
                 }
     }
-//    @PostMapping("/order/cars")
-//    public boolean OrderCarAtFactory (CarOrder carOrder){
-//
-//    }
 
 }

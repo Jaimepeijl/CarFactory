@@ -5,6 +5,7 @@ import nl.ordina.distribution.repository.model.Phone;
 import nl.ordina.distribution.repository.repository.PhoneDistributionRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PhoneDistributionService {
@@ -16,6 +17,15 @@ public class PhoneDistributionService {
 
     public int updateStock (PhoneDto phoneDto) {
         int orderAmount = phoneDto.orderAmount();
+        if (phoneDto.uuid() !=  null){
+            Phone phone = getPhoneById(phoneDto.uuid());
+            if (phone.getStock() - orderAmount < phone.getMinStock()){
+                return 0;
+            }
+            phone.setStock(phone.getStock() - orderAmount);
+            phoneDistributionRepository.save(phone);
+            return phone.getStock();
+        }
         if (phoneDto.colour() != null){
             Phone phone = phoneDistributionRepository.findPhoneByNameEqualsIgnoreCaseAndColourEqualsIgnoreCase(phoneDto.name(), phoneDto.colour());
             if (phone.getStock() - orderAmount < phone.getMinStock()){
@@ -41,11 +51,8 @@ public class PhoneDistributionService {
         return phoneDistributionRepository.findPhoneByNameEqualsIgnoreCase(phoneName);
     }
 
-    public Phone fromDto (PhoneDto phoneDto) {
-        Phone phone = new Phone();
-        phone.setName(phoneDto.name().toLowerCase());
-        phone.setStock(phone.getStock());
-        return phone;
+    public Phone getPhoneById(UUID id){
+        return phoneDistributionRepository.findPhoneById(id);
     }
 
     public List<Phone> getPhones(){

@@ -8,8 +8,6 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
-import java.util.ArrayList;
 import java.util.UUID;
 
 @Getter
@@ -21,7 +19,7 @@ public class Laptop {
 
     @Id
     @GeneratedValue
-    private UUID laptopId;
+    private UUID id;
     private String brand;
     private String model;
     private String colour;
