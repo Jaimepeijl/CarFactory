@@ -20,24 +20,25 @@ public class LaptopDistributionController {
     }
 
     @GetMapping("/laptops")
-    public List<Laptop> getLaptops(){
+    public List<Laptop> getLaptops() {
         return laptopDistributionService.getLaptops();
     }
 
 
     @PutMapping("/laptops/update-stock/")
-    public ResponseEntity<Object> updateStock (@RequestBody @Valid LaptopDto laptopDto){
+    public ResponseEntity<Object> updateStock(@RequestBody @Valid LaptopDto laptopDto) {
         int stockCode = laptopDistributionService.updateStock(laptopDto);
-        if (stockCode > 0){
-            return new ResponseEntity<>((stockCode),
-                    HttpStatus.OK);
-        } else if(stockCode < 0) {
-            return new ResponseEntity<>("Did not find phone '" + laptopDto.model() + "'",
-                    HttpStatus.BAD_REQUEST);
+        if (stockCode > 0) {
+            return new ResponseEntity<>((stockCode), HttpStatus.OK);
+        } else if (stockCode < 0) {
+            return new ResponseEntity<>("Did not find phone '" + laptopDto.model() + "'", HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity<>("Not enough stock for " + laptopDto.model(),
-                    HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Not enough stock for " + laptopDto.model(), HttpStatus.BAD_REQUEST);
         }
     }
 
+    @PostMapping("/order/laptops")
+    public ResponseEntity<Object> orderLaptop(@Valid LaptopDto laptopDto) {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
