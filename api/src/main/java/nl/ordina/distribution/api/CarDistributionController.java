@@ -5,6 +5,7 @@ import nl.ordina.distribution.repository.dto.CarDto;
 import nl.ordina.distribution.repository.dto.CarOrder;
 import nl.ordina.distribution.repository.dto.OrderCarsResponse;
 import nl.ordina.distribution.repository.model.Car;
+import org.junit.jupiter.api.Assertions;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -43,14 +44,13 @@ public class CarDistributionController {
             factoryOrder(carOrder);
                     return new ResponseEntity<>(String.format("The current stock for %s reached it's minimum, " + orderAmount +
                             "cars are ordered in the factory", carDto.name()), HttpStatus.BAD_REQUEST);
-
                 }
     }
 
-    private final String BASE_URL = "https://example.com/api";
+    private final String BASE_URL = "http://localhost:80";
     private final String ORDER_CARS_ENDPOINT = "/order/cars";
 
-    private RestTemplate restTemplate;
+    RestTemplate restTemplate = new RestTemplate();
     public OrderCarsResponse factoryOrder (CarOrder carOrder){
 
         HttpHeaders headers = new HttpHeaders();
@@ -58,10 +58,14 @@ public class CarDistributionController {
 
         HttpEntity<CarOrder> requestEntity = new HttpEntity<>(carOrder, headers);
 
-        OrderCarsResponse response = restTemplate.exchange (BASE_URL + ORDER_CARS_ENDPOINT, HttpMethod.POST,
-                requestEntity, OrderCarsResponse.class).getBody();
+        ResponseEntity<OrderCarsResponse> response = restTemplate
+                .exchange (BASE_URL + ORDER_CARS_ENDPOINT, HttpMethod.POST,
+                requestEntity, OrderCarsResponse.class);
 
-        return response;
+        OrderCarsResponse orderCarsResponse = response.getBody();
+        System.out.println(orderCarsResponse);
+
+        return response.getBody();
     }
 }
 

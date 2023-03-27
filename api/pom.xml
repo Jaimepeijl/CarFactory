@@ -32,6 +32,10 @@
             <artifactId>domain</artifactId>
             <version>${parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+        </dependency>
     </dependencies>
 
     <parent>

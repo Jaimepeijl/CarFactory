@@ -31,9 +31,8 @@ class CarDistributionServiceTest {
     void updateStock() {
         // Given
         UUID uuid = UUID.randomUUID();
-        CarDto carDto = new CarDto("Tesla", 1, "Metalic grijs", uuid);
+        CarDto carDto = new CarDto("Tesla", 2, "Metalic grijs", uuid);
         Car car = new Car(uuid, "Tesla", "Model S3XY", "Metalic grijs", "Elektrisch", 220,380,500,4,2,4);
-
 
         // When
         if (carDto.uuid() != null){
@@ -44,7 +43,7 @@ class CarDistributionServiceTest {
         int result = carService.updateStock(carDto);
 
         // Then
-        assertEquals(3, result);
+        assertEquals(2, result);
         verify(carDistributionRepository, times(1)).save(car);
     }
 
