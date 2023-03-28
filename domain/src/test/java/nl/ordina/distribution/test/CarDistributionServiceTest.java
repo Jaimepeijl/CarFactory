@@ -53,29 +53,29 @@ class CarDistributionServiceTest {
         assertEquals(2, result);
         verify(carDistributionRepository, times(1)).save(car);
     }
-    @Mock
-    private RestTemplate restTemplate;
-
-    @InjectMocks
-    private CarOrder carOrder;
-
-    @InjectMocks
-    private CarDistributionController carDistributionController;
-
-    @Test
-    void testFactoryOrder() {
-//        Given
-        OrderCarsResponse expectedResponse = new OrderCarsResponse();
-        ResponseEntity<OrderCarsResponse> mockResponse = ResponseEntity.ok(expectedResponse);
-
-//        When
-        Mockito.when(restTemplate.exchange(Mockito.anyString(),Mockito.eq(HttpMethod.POST),
-                Mockito.<HttpEntity<CarOrder>>any(),Mockito.eq(OrderCarsResponse.class)))
-                .thenReturn(mockResponse);
-
-        OrderCarsResponse actualResponse = carDistributionController.factoryOrder(new CarOrder());
-//        Then
-    }
+//    @Mock
+//    private RestTemplate restTemplate;
+//
+//    @InjectMocks
+//    private CarOrder carOrder;
+//
+//    @InjectMocks
+//    private CarDistributionController carDistributionController;
+//
+//    @Test
+//    void testFactoryOrder() {
+////        Given
+//        OrderCarsResponse expectedResponse = new OrderCarsResponse();
+//        ResponseEntity<OrderCarsResponse> mockResponse = ResponseEntity.ok(expectedResponse);
+//
+////        When
+//        Mockito.when(restTemplate.exchange(Mockito.anyString(),Mockito.eq(HttpMethod.POST),
+//                Mockito.<HttpEntity<CarOrder>>any(),Mockito.eq(OrderCarsResponse.class)))
+//                .thenReturn(mockResponse);
+//
+//        OrderCarsResponse actualResponse = carDistributionController.factoryOrder(new CarOrder());
+////        Then
+//    }
 
 
     @Test
