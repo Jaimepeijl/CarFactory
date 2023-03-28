@@ -7,6 +7,7 @@ import nl.ordina.distribution.repository.repository.CarDistributionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import java.util.UUID;
 
@@ -30,9 +31,8 @@ class CarDistributionServiceTest {
     void updateStock() {
         // Given
         UUID uuid = UUID.randomUUID();
-        CarDto carDto = new CarDto("Tesla", 1, "Metalic grijs", uuid);
+        CarDto carDto = new CarDto("Tesla", 2, "Metalic grijs", uuid);
         Car car = new Car(uuid, "Tesla", "Model S3XY", "Metalic grijs", "Elektrisch", 220,380,500,4,2,4);
-
 
         // When
         if (carDto.uuid() != null){
@@ -43,7 +43,7 @@ class CarDistributionServiceTest {
         int result = carService.updateStock(carDto);
 
         // Then
-        assertEquals(3, result);
+        assertEquals(2, result);
         verify(carDistributionRepository, times(1)).save(car);
     }
 
@@ -54,12 +54,15 @@ class CarDistributionServiceTest {
     @Test
     void getCarByName() {
         String carName = "Tesla";
-        Car car = new Car(UUID.randomUUID(), "Tesla", "Model S3XY", "Metalic grijs", "Elektrisch", 220,380,500,4,2,4);
-        when(carDistributionRepository.findCarByBrandEqualsIgnoreCase(carName)).thenReturn(car);
+        UUID uuid = UUID.randomUUID();
+        Car car = new Car(uuid, "Tesla", "Model S3XY", "Metalic grijs", "Elektrisch", 220,380,500,4,2,4);
 
+        when(carDistributionRepository.findCarByBrandEqualsIgnoreCase(carName)).thenReturn(car);
         Car result = carService.getCarByName(carName);
 
         assertEquals("Tesla", result.getBrand());
+        assertEquals("Model S3XY", result.getModel());
+        assertEquals(uuid, result.getId());
     }
 
     @Test

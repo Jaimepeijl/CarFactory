@@ -3,10 +3,12 @@ package nl.ordina.distribution.api;
 import nl.ordina.distribution.domain.CarDistributionService;
 import nl.ordina.distribution.repository.dto.CarDto;
 import nl.ordina.distribution.repository.dto.CarOrder;
+import nl.ordina.distribution.repository.dto.OrderCarsResponse;
 import nl.ordina.distribution.repository.model.Car;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.junit.jupiter.api.Assertions;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -37,9 +39,33 @@ public class CarDistributionController {
         } else if (stockCode < 0) {
             return new ResponseEntity<>("Did not find car '" + carDto.name() + "'", HttpStatus.BAD_REQUEST);
                 } else {
-                    return new ResponseEntity<>(String.format("The current stock for %s reached it's minimum, " +
-                            "please notify the procurement department", carDto.name()), HttpStatus.BAD_REQUEST);
+            int orderAmount = 5;
+            CarOrder carOrder = new CarOrder(orderAmount);
+            factoryOrder(carOrder);
+                    return new ResponseEntity<>(String.format("The current stock for %s reached it's minimum, " + orderAmount +
+                            "cars are ordered in the factory", carDto.name()), HttpStatus.BAD_REQUEST);
                 }
     }
 
+    private final String BASE_URL = "http://localhost:80";
+    private final String ORDER_CARS_ENDPOINT = "/order/cars";
+
+    RestTemplate restTemplate = new RestTemplate();
+    public OrderCarsResponse factoryOrder (CarOrder carOrder){
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<CarOrder> requestEntity = new HttpEntity<>(carOrder, headers);
+
+        ResponseEntity<OrderCarsResponse> response = restTemplate
+                .exchange (BASE_URL + ORDER_CARS_ENDPOINT, HttpMethod.POST,
+                requestEntity, OrderCarsResponse.class);
+
+        OrderCarsResponse orderCarsResponse = response.getBody();
+        System.out.println(orderCarsResponse);
+
+        return response.getBody();
+    }
 }
+
