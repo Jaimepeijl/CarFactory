@@ -4,22 +4,20 @@ import nl.ordina.distribution.domain.CarDistributionService;
 import nl.ordina.distribution.repository.dto.CarDto;
 import nl.ordina.distribution.repository.model.Car;
 import nl.ordina.distribution.repository.repository.CarDistributionRepository;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 class CarDistributionServiceTest {
 
     @Mock
     private CarDistributionRepository carDistributionRepository;
 
+    @Mock
     private CarDistributionService carService;
 
     @BeforeEach
@@ -30,15 +28,21 @@ class CarDistributionServiceTest {
 
     @Test
     void updateStock() {
-        // Arrange
-        CarDto carDto = new CarDto("Tesla", 1, "Metalic grijs");
-        Car car = new Car(UUID.randomUUID(), "Tesla", "Model S3XY", "Metalic grijs", "Elektrisch", 220,380,500,4,2,4);
-        when(carDistributionRepository.findCarByBrandEqualsIgnoreCaseAndColourEqualsIgnoreCase(carDto.name(), carDto.colour())).thenReturn(car);
+        // Given
+        UUID uuid = UUID.randomUUID();
+        CarDto carDto = new CarDto("Tesla", 1, "Metalic grijs", uuid);
+        Car car = new Car(uuid, "Tesla", "Model S3XY", "Metalic grijs", "Elektrisch", 220,380,500,4,2,4);
 
-        // Act
+
+        // When
+        if (carDto.uuid() != null){
+            when(carDistributionRepository.findCarById(carDto.uuid())).thenReturn(car);
+        } else {
+            when(carDistributionRepository.findCarByBrandEqualsIgnoreCaseAndColourEqualsIgnoreCase(carDto.name(), carDto.colour())).thenReturn(car);
+        }
         int result = carService.updateStock(carDto);
 
-        // Assert
+        // Then
         assertEquals(3, result);
         verify(carDistributionRepository, times(1)).save(car);
     }
