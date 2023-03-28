@@ -2,6 +2,8 @@ package nl.ordina.distribution.test;
 
 import nl.ordina.distribution.domain.CarDistributionService;
 import nl.ordina.distribution.repository.dto.CarDto;
+import nl.ordina.distribution.repository.dto.CarOrder;
+import nl.ordina.distribution.repository.dto.OrderCarsResponse;
 import nl.ordina.distribution.repository.model.Car;
 import nl.ordina.distribution.repository.repository.CarDistributionRepository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -9,9 +11,14 @@ import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.UUID;
 class CarDistributionServiceTest {
@@ -46,10 +53,30 @@ class CarDistributionServiceTest {
         assertEquals(2, result);
         verify(carDistributionRepository, times(1)).save(car);
     }
+    @Mock
+    private RestTemplate restTemplate;
+
+    @InjectMocks
+    private CarOrder carOrder;
+
+    @InjectMocks
+    private CarDistributionController carDistributionController;
 
     @Test
-    void orderStock() {
+    void testFactoryOrder() {
+//        Given
+        OrderCarsResponse expectedResponse = new OrderCarsResponse();
+        ResponseEntity<OrderCarsResponse> mockResponse = ResponseEntity.ok(expectedResponse);
+
+//        When
+        Mockito.when(restTemplate.exchange(Mockito.anyString(),Mockito.eq(HttpMethod.POST),
+                Mockito.<HttpEntity<CarOrder>>any(),Mockito.eq(OrderCarsResponse.class)))
+                .thenReturn(mockResponse);
+
+        OrderCarsResponse actualResponse = carDistributionController.factoryOrder(new CarOrder());
+//        Then
     }
+
 
     @Test
     void getCarByName() {

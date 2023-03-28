@@ -43,29 +43,44 @@ public class CarDistributionController {
             CarOrder carOrder = new CarOrder(orderAmount);
             factoryOrder(carOrder);
                     return new ResponseEntity<>(String.format("The current stock for %s reached it's minimum, " + orderAmount +
-                            "cars are ordered in the factory", carDto.name()), HttpStatus.BAD_REQUEST);
+                            " cars are ordered in the factory", carDto.name()), HttpStatus.BAD_REQUEST);
                 }
     }
 
-    private final String BASE_URL = "http://localhost:80";
+    private final String BASE_URL = "http://localhost:8082";
     private final String ORDER_CARS_ENDPOINT = "/order/cars";
 
     RestTemplate restTemplate = new RestTemplate();
-    public OrderCarsResponse factoryOrder (CarOrder carOrder){
+    private static class CarOrderResponse {
+        private List<OrderCarsResponse> cars;
+
+        public List<OrderCarsResponse> getCars() {
+            return cars;
+        }
+
+        public void setCars(List<OrderCarsResponse> cars) {
+            this.cars = cars;
+        }
+    }
+    public List<OrderCarsResponse> factoryOrder (CarOrder carOrder){
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<CarOrder> requestEntity = new HttpEntity<>(carOrder, headers);
 
-        ResponseEntity<OrderCarsResponse> response = restTemplate
-                .exchange (BASE_URL + ORDER_CARS_ENDPOINT, HttpMethod.POST,
-                requestEntity, OrderCarsResponse.class);
-
-        OrderCarsResponse orderCarsResponse = response.getBody();
-        System.out.println(orderCarsResponse);
-
-        return response.getBody();
+        ResponseEntity<CarOrderResponse> response = restTemplate
+                .postForEntity(BASE_URL + ORDER_CARS_ENDPOINT,
+                requestEntity, CarOrderResponse.class);
+        CarOrderResponse carOrderResponse = response.getBody();
+        System.out.println(response);
+        System.out.println(carOrderResponse.cars);
+        System.out.println(carOrderResponse.getCars());
+        for (int i = 0; i < carOrderResponse.cars.size(); i++) {
+            System.out.println(carOrderResponse.cars.get(i).getId());
+            System.out.println(carOrderResponse.cars.get(i).getPrice());
+        }
+        return carOrderResponse.cars;
     }
 }
 
