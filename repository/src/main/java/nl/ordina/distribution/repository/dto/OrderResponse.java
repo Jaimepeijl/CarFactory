@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderCarsResponse implements Serializable {
+public class OrderResponse implements Serializable {
     private Integer id;
     private Double price;
 }
