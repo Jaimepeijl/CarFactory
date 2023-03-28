@@ -1,0 +1,59 @@
+version: '3.8'
+services:
+  factory-db:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    restart: unless-stopped
+    ports:
+      - '1432:1433'
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=r00t.R00T
+    healthcheck:
+      test: [ "CMD", "/opt/mssql-tools/bin/sqlcmd", "-Usa", "-Pr00t.R00T", "-Q", "select 1" ]
+      interval: 1s
+      retries: 20
+    networks:
+      - factory
+  factory-app:
+    image: orlandosmits/ordina-factory:latest
+    restart: unless-stopped
+    environment:
+      FACTORY_DB_HOST: factory-db
+      FACTORY_DB_PORT: 1433
+    ports:
+      - '8082:8082'
+    depends_on:
+      factory-db:
+        condition: service_healthy
+    networks:
+      - factory
+  chipfactory-db:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    restart: unless-stopped
+    ports:
+      - '1433:1433'
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=r00t.R00T
+    healthcheck:
+      test: [ "CMD", "/opt/mssql-tools/bin/sqlcmd", "-Usa", "-Pr00t.R00T", "-Q", "select 1" ]
+      interval: 1s
+      retries: 20
+    networks:
+      - factory
+  chipfactory-app:
+    image: orlandosmits/ordina-chip-factory:latest
+    restart: unless-stopped
+    environment:
+      FACTORY_DB_HOST: chipfactory-db
+      FACTORY_DB_PORT: 1433
+    ports:
+      - '8083:8083'
+    depends_on:
+      chipfactory-db:
+        condition: service_healthy
+    networks:
+      - factory
+networks:
+  factory:
+    driver: bridge
