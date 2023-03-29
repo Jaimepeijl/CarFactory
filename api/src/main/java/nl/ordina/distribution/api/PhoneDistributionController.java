@@ -1,11 +1,15 @@
 package nl.ordina.distribution.api;
 
+import lombok.Getter;
 import nl.ordina.distribution.domain.PhoneDistributionService;
+import nl.ordina.distribution.repository.dto.CarOrder;
+import nl.ordina.distribution.repository.dto.OrderResponse;
 import nl.ordina.distribution.repository.dto.PhoneDto;
+import nl.ordina.distribution.repository.dto.PhoneOrder;
 import nl.ordina.distribution.repository.model.Phone;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -26,18 +30,40 @@ public class PhoneDistributionController {
     }
 
     @PutMapping("/phones/update-stock")
-    public ResponseEntity<Object> updateStock (@RequestBody @Valid PhoneDto phoneDto){
+    public ResponseEntity<Object> updateStock(@RequestBody @Valid PhoneDto phoneDto) {
 
         int stockCode = phoneDistributionService.updateStock(phoneDto);
-        if (stockCode > 0){
-                    return new ResponseEntity<>(stockCode,
-                            HttpStatus.OK);
-                } else if(stockCode < 0) {
+        if (stockCode > 0) {
+            return new ResponseEntity<>(stockCode,
+                    HttpStatus.OK);
+        } else if (stockCode < 0) {
             return new ResponseEntity<>("Did not find phone '" + phoneDto.name() + "'",
                     HttpStatus.BAD_REQUEST);
         } else {
-                return new ResponseEntity<>("Not enough stock for " + phoneDto.name(),
-                        HttpStatus.BAD_REQUEST);
+            PhoneOrder phoneOrder = new PhoneOrder(0);
+            if (factoryOrder(phoneOrder) != null){
+            return new ResponseEntity<>("Not enough stock for " + phoneDto.name() + ", " + phoneOrder.amountOfMobiles() + " are ordered in the factory",
+                    HttpStatus.CREATED);
             }
+            return new ResponseEntity<>("Unknown error", HttpStatus.BAD_REQUEST);
         }
     }
+
+    public ResponseEntity<Object> factoryOrder(PhoneOrder phoneOrder) {
+        RestTemplate restTemplate = new RestTemplate();
+        String URL = "http://localhost:8082/order/mobiles";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<PhoneOrder> requestEntity = new HttpEntity<>(phoneOrder, headers);
+
+
+        ResponseEntity<Object> response = restTemplate
+                .exchange(URL, HttpMethod.POST,
+                        requestEntity, Object.class);
+        System.out.println(response.getBody());
+        return response;
+
+    }
+}

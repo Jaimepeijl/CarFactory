@@ -1,7 +1,9 @@
 package nl.ordina.distribution.repository.dto;
 
+import lombok.Getter;
+
 import javax.validation.constraints.Min;
 
-public record OrderRequest(@Min(1)int amountOfProducts){
+public record PhoneOrder(@Min(1)int amountOfMobiles){
 
 }
