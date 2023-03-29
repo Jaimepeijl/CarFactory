@@ -2,9 +2,10 @@ package nl.ordina.distribution.api;
 
 import lombok.Getter;
 import nl.ordina.distribution.domain.PhoneDistributionService;
-import nl.ordina.distribution.repository.dto.OrderRequest;
+import nl.ordina.distribution.repository.dto.CarOrder;
 import nl.ordina.distribution.repository.dto.OrderResponse;
 import nl.ordina.distribution.repository.dto.PhoneDto;
+import nl.ordina.distribution.repository.dto.PhoneOrder;
 import nl.ordina.distribution.repository.model.Phone;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -39,34 +40,30 @@ public class PhoneDistributionController {
             return new ResponseEntity<>("Did not find phone '" + phoneDto.name() + "'",
                     HttpStatus.BAD_REQUEST);
         } else {
-            OrderRequest phoneOrderRequest = new OrderRequest(5);
-            factoryOrder(phoneOrderRequest);
-            return new ResponseEntity<>("Not enough stock for " + phoneDto.name() + ", " + phoneOrderRequest.amountOfProducts() + " are ordered in the factory",
+            PhoneOrder phoneOrder = new PhoneOrder(0);
+            if (factoryOrder(phoneOrder) != null){
+            return new ResponseEntity<>("Not enough stock for " + phoneDto.name() + ", " + phoneOrder.amountOfMobiles() + " are ordered in the factory",
                     HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>("Unknown error", HttpStatus.BAD_REQUEST);
         }
     }
 
-    private final String URL = "http://localhost:8082/order/mobiles";
-    RestTemplate restTemplate = new RestTemplate();
+    public ResponseEntity<Object> factoryOrder(PhoneOrder phoneOrder) {
+        RestTemplate restTemplate = new RestTemplate();
+        String URL = "http://localhost:8082/order/mobiles";
 
-    @Getter
-    private static class PhoneOrderResponse{
-        private List<OrderResponse> phones;
-
-    }
-    public PhoneOrderResponse factoryOrder(OrderRequest phoneOrderRequest) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<OrderRequest> requestEntity = new HttpEntity<>(phoneOrderRequest, headers);
+        HttpEntity<PhoneOrder> requestEntity = new HttpEntity<>(phoneOrder, headers);
 
-        ResponseEntity<PhoneOrderResponse> response = restTemplate
-                .postForEntity(URL, requestEntity, PhoneOrderResponse.class);
-        PhoneOrderResponse phoneOrderResponse = response.getBody();
-        System.out.println(phoneOrderResponse.phones);
-        System.out.println(phoneOrderResponse.getPhones());
 
-        return phoneOrderResponse;
+        ResponseEntity<Object> response = restTemplate
+                .exchange(URL, HttpMethod.POST,
+                        requestEntity, Object.class);
+        System.out.println(response.getBody());
+        return response;
 
     }
 }

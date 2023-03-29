@@ -2,7 +2,7 @@ package nl.ordina.distribution.api;
 
 import nl.ordina.distribution.domain.CarDistributionService;
 import nl.ordina.distribution.repository.dto.CarDto;
-import nl.ordina.distribution.repository.dto.OrderRequest;
+import nl.ordina.distribution.repository.dto.CarOrder;
 import nl.ordina.distribution.repository.dto.OrderResponse;
 import nl.ordina.distribution.repository.model.Car;
 import org.springframework.http.*;
@@ -38,50 +38,29 @@ public class CarDistributionController {
         } else if (stockCode < 0) {
             return new ResponseEntity<>("Did not find car '" + carDto.name() + "'", HttpStatus.BAD_REQUEST);
                 } else {
-            int orderAmount = 5;
-            OrderRequest carOrderRequest = new OrderRequest(orderAmount);
-            if (factoryOrder(carOrderRequest)){
-                    return new ResponseEntity<>(String.format("The current stock for %s reached it's minimum, " + orderAmount +
+            CarOrder carOrder = new CarOrder(1);
+            if (factoryOrder(carOrder) != null){
+                    return new ResponseEntity<>(String.format("The current stock for %s reached it's minimum, " + carOrder.amountOfCars() +
                             " cars are ordered in the factory", carDto.name()), HttpStatus.CREATED);
                 }
             return new ResponseEntity<>("Unknown error", HttpStatus.BAD_REQUEST);
         }
     }
 
-    public boolean factoryOrder(OrderRequest orderRequest){
-        final String BASE_URL = "http://localhost:8082";
-        final String ORDER_CARS_ENDPOINT = "/order/cars";
-
+    public ResponseEntity<Object> factoryOrder(CarOrder carOrder){
+        String URL = "http://localhost:8082/order/cars";
         RestTemplate restTemplate = new RestTemplate();
-        class OrderList {
-            private List<OrderResponse> list;
-
-            public List<OrderResponse> getList() {
-                return list;
-            }
-
-            public void setList(List<OrderResponse> list) {
-                this.list = list;
-            }
-        }
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<OrderRequest> requestEntity = new HttpEntity<>(orderRequest, headers);
+        HttpEntity<CarOrder> requestEntity = new HttpEntity<>(carOrder, headers);
 
-        ResponseEntity<OrderList> response = restTemplate
-                .exchange(BASE_URL + ORDER_CARS_ENDPOINT, HttpMethod.POST,
-                        requestEntity, OrderList.class);
-        OrderList orderList = response.getBody();
-//        System.out.println(response);
-//        System.out.println(orderList.list);
-//        System.out.println(orderList.getList());
-//        for (int i = 0; i < orderList.list.size(); i++) {
-//            System.out.println(orderList.list.get(i).getId());
-//            System.out.println(orderList.list.get(i).getPrice());
-//        }
-        return true;
+        ResponseEntity<Object> response = restTemplate
+                .exchange(URL, HttpMethod.POST,
+                        requestEntity, Object.class);
+        System.out.println(response.getBody());
+        return response;
     }
     }
 
