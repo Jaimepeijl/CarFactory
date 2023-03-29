@@ -74,13 +74,13 @@ public class CarDistributionController {
                 .exchange(BASE_URL + ORDER_CARS_ENDPOINT, HttpMethod.POST,
                         requestEntity, OrderList.class);
         OrderList orderList = response.getBody();
-//        System.out.println(response);
-//        System.out.println(orderList.list);
-//        System.out.println(orderList.getList());
-//        for (int i = 0; i < orderList.list.size(); i++) {
-//            System.out.println(orderList.list.get(i).getId());
-//            System.out.println(orderList.list.get(i).getPrice());
-//        }
+        System.out.println(response);
+        System.out.println(orderList.list);
+        System.out.println(orderList.getList());
+        for (int i = 0; i < orderList.list.size(); i++) {
+            System.out.println(orderList.list.get(i).getId());
+            System.out.println(orderList.list.get(i).getPrice());
+        }
         return true;
     }
     }
