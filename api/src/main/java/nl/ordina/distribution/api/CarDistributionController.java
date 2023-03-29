@@ -42,7 +42,7 @@ public class CarDistributionController {
             OrderRequest carOrderRequest = new OrderRequest(orderAmount);
             if (factoryOrder(carOrderRequest)){
                     return new ResponseEntity<>(String.format("The current stock for %s reached it's minimum, " + orderAmount +
-                            " cars are ordered in the factory", carDto.name()), HttpStatus.BAD_REQUEST);
+                            " cars are ordered in the factory", carDto.name()), HttpStatus.CREATED);
                 }
             return new ResponseEntity<>("Unknown error", HttpStatus.BAD_REQUEST);
         }
