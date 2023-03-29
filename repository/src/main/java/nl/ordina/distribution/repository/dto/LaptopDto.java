@@ -6,6 +6,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-public record LaptopDto (@NotBlank String model, @NotNull @Min(0) int orderAmount, String colour, String brand, UUID uuid) {
+public record LaptopDto (@NotBlank String model, @NotNull @Min(0) int orderAmount, String colour, String brand, UUID id) {
 }
 

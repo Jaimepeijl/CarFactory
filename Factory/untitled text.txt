@@ -1,0 +1,5 @@
+docker pull swaggerapi/swagger-editor 
+docker run -d -p 80:8080 swaggerapi/swagger-editor
+Dan kom je - als je naar localhost gaat in je browser - in de Swagger Editor
+In Swagger editor die API specs geplakt. Generate Server - Spring
+Dan krijg je een java/spring programma die je kunt bekijken

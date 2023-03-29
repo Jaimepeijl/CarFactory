@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS car(
 
 );
 CREATE TABLE IF NOT EXISTS laptop(
-                                     laptop_id uuid PRIMARY KEY,
+                                     id uuid PRIMARY KEY,
                                      brand varchar(20),
                                      model varchar(20),
                                      colour varchar(20),

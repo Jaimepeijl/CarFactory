@@ -16,6 +16,7 @@ import java.util.List;
 @CrossOrigin
 public class CarDistributionController {
     public final CarDistributionService carDistributionService;
+
     public CarDistributionController(CarDistributionService carDistributionService) {
         this.carDistributionService = carDistributionService;
     }
@@ -26,29 +27,29 @@ public class CarDistributionController {
     }
 
     @GetMapping("/cars")
-    public List<Car> getCars(){
+    public List<Car> getCars() {
         return carDistributionService.getCars();
     }
 
     @PutMapping("/cars/update-stock")
-    public ResponseEntity<Object> updateStock (@RequestBody @Valid CarDto carDto){
+    public ResponseEntity<Object> updateStock(@RequestBody @Valid CarDto carDto) {
         int stockCode = carDistributionService.updateStock(carDto);
         if (stockCode > 0) {
             return new ResponseEntity<>(stockCode, HttpStatus.OK);
         } else if (stockCode < 0) {
             return new ResponseEntity<>("Did not find car '" + carDto.name() + "'", HttpStatus.BAD_REQUEST);
-                } else {
+        } else {
             int orderAmount = 5;
             OrderRequest carOrderRequest = new OrderRequest(orderAmount);
-            if (factoryOrder(carOrderRequest)){
-                    return new ResponseEntity<>(String.format("The current stock for %s reached it's minimum, " + orderAmount +
-                            " cars are ordered in the factory", carDto.name()), HttpStatus.BAD_REQUEST);
-                }
+            if (factoryOrder(carOrderRequest)) {
+                return new ResponseEntity<>(String.format("The current stock for %s reached it's minimum, " + orderAmount +
+                        " cars are ordered in the factory", carDto.name()), HttpStatus.BAD_REQUEST);
+            }
             return new ResponseEntity<>("Unknown error", HttpStatus.BAD_REQUEST);
         }
     }
 
-    public boolean factoryOrder(OrderRequest orderRequest){
+    public boolean factoryOrder(OrderRequest orderRequest) {
         final String BASE_URL = "http://localhost:8082";
         final String ORDER_CARS_ENDPOINT = "/order/cars";
 
@@ -83,5 +84,5 @@ public class CarDistributionController {
 //        }
         return true;
     }
-    }
+}
 
