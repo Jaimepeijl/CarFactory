@@ -7,11 +7,9 @@ import nl.ordina.distribution.repository.model.Car;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
-import java.io.IOError;
 import java.util.List;
 
 @RestController
