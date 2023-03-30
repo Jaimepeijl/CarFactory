@@ -38,7 +38,7 @@ public class CarDistributionController {
         } else if (stockCode < 0) {
             return new ResponseEntity<>("Did not find car", HttpStatus.BAD_REQUEST);
                 } else {
-            CarOrder carOrder = new CarOrder(1);
+            CarOrder carOrder = new CarOrder(carDto.orderAmount());
             if (factoryOrder(carOrder) != null){
                     return new ResponseEntity<>(String.format("The current stock for %s reached it's minimum, " + carOrder.amountOfCars() +
                             " cars are ordered in the factory", carDto.name()), HttpStatus.CREATED);

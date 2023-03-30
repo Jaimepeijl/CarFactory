@@ -39,7 +39,7 @@ public class PhoneDistributionController {
             return new ResponseEntity<>("Did not find phone",
                     HttpStatus.BAD_REQUEST);
         } else {
-            PhoneOrder phoneOrder = new PhoneOrder(1);
+            PhoneOrder phoneOrder = new PhoneOrder(phoneDto.orderAmount());
             if (factoryOrder(phoneOrder) != null){
             return new ResponseEntity<>("Not enough stock for " + phoneDto.name() + ", " + phoneOrder.amountOfMobiles() + " are ordered in the factory",
                     HttpStatus.CREATED);
