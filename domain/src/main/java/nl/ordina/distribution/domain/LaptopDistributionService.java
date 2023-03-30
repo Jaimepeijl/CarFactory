@@ -18,8 +18,7 @@ public class LaptopDistributionService {
 
     public int updateStock (LaptopDto laptopDto) {
         int orderAmount = laptopDto.orderAmount();
-        if (laptopDto.id() !=  null){
-            Laptop laptop = getLaptopById(laptopDto.id());
+        Laptop laptop = getLaptop(laptopDto);
             if (laptop == null){
                 return -1;
             }
@@ -30,26 +29,15 @@ public class LaptopDistributionService {
             laptopDistributionRepository.save(laptop);
             return laptop.getStock();
         }
-        if (laptopDto.colour() != null) {
-            Laptop laptop = laptopDistributionRepository.
-                    findLaptopByModelEqualsIgnoreCaseAndColourEqualsIgnoreCase(laptopDto.model(), laptopDto.colour());
-            if (laptop.getStock() - orderAmount < laptop.getMinStock()) {
-                return 0;
-            }
-            laptop.setStock(laptop.getStock() - orderAmount);
-            laptopDistributionRepository.save(laptop);
-            return laptop.getStock();
+
+    public Laptop getLaptop(LaptopDto laptopDto) {
+        if (laptopDto.id() != null) {
+            return getLaptopById(laptopDto.id());
+        } else if (laptopDto.colour() != null) {
+            return getLaptopByModelAndColour(laptopDto.model(), laptopDto.colour());
+        } else {
+            return getLaptopByModel(laptopDto.model());
         }
-        if (laptopDistributionRepository.findLaptopByModelEqualsIgnoreCase(laptopDto.model()) != null) {
-            Laptop laptop = getLaptopByModel(laptopDto.model());
-            if (laptop.getStock() - orderAmount < laptop.getMinStock()){
-                return 0;
-            }
-            laptop.setStock(laptop.getStock() - orderAmount);
-            laptopDistributionRepository.save(laptop);
-            return laptop.getStock();
-        }
-        return -1;
     }
 
     public Laptop getLaptopByModel(String laptopModel) {
@@ -57,6 +45,9 @@ public class LaptopDistributionService {
     }
     public Laptop getLaptopById(UUID id){
         return laptopDistributionRepository.findLaptopById(id);
+    }
+    public Laptop getLaptopByModelAndColour(String laptopModel, String laptopColour){
+        return laptopDistributionRepository.findLaptopByModelEqualsIgnoreCaseAndColourEqualsIgnoreCase(laptopModel, laptopColour);
     }
 
     public List<Laptop> getLaptops(){
