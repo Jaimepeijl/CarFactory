@@ -3,7 +3,6 @@ package nl.ordina.distribution.api;
 import nl.ordina.distribution.domain.CarDistributionService;
 import nl.ordina.distribution.repository.dto.CarDto;
 import nl.ordina.distribution.repository.dto.CarOrder;
-import nl.ordina.distribution.repository.dto.OrderResponse;
 import nl.ordina.distribution.repository.model.Car;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +36,7 @@ public class CarDistributionController {
         if (stockCode > 0) {
             return new ResponseEntity<>(stockCode, HttpStatus.OK);
         } else if (stockCode < 0) {
-            return new ResponseEntity<>("Did not find car '" + carDto.name() + "'", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Did not find car", HttpStatus.BAD_REQUEST);
                 } else {
             CarOrder carOrder = new CarOrder(1);
             if (factoryOrder(carOrder) != null){

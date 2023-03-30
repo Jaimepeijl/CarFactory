@@ -2,8 +2,7 @@ package nl.ordina.distribution.api;
 
 import nl.ordina.distribution.domain.LaptopDistributionService;
 import nl.ordina.distribution.repository.dto.LaptopDto;
-import nl.ordina.distribution.repository.dto.OrderRequest;
-import nl.ordina.distribution.repository.dto.OrderResponse;
+import nl.ordina.distribution.repository.dto.LaptopOrder;
 import nl.ordina.distribution.repository.model.Laptop;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +35,8 @@ public class LaptopDistributionController {
             return new ResponseEntity<>("Did not find laptop '" + laptopDto.model() + "'", HttpStatus.BAD_REQUEST);
         } else {
             int orderAmount = 5;
-            OrderRequest carOrderRequest = new OrderRequest(orderAmount);
-            if (factoryOrder(carOrderRequest)) {
+            LaptopOrder laptopOrder = new LaptopOrder(orderAmount);
+            if (factoryOrder(laptopOrder) != null) {
                 return new ResponseEntity<>(String.format("The current stock for %s reached it's minimum, " + orderAmount +
                         " cars are ordered in the factory", laptopDto.model()), HttpStatus.BAD_REQUEST);
             }
@@ -46,34 +45,22 @@ public class LaptopDistributionController {
     }
 
 
-    public boolean factoryOrder(OrderRequest orderRequest) {
+    public ResponseEntity<Object> factoryOrder(LaptopOrder laptopOrder) {
         final String BASE_URL = "http://localhost:8082";
         final String ORDER_LAPTOPS_ENDPOINT = "/order/laptops";
 
         RestTemplate restTemplate = new RestTemplate();
 
-        class OrderList {
-            private List<OrderResponse> list;
-
-            public List<OrderResponse> getList() {
-                return list;
-            }
-
-            public void setList(List<OrderResponse> list) {
-                this.list = list;
-            }
-        }
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<OrderRequest> requestEntity = new HttpEntity<>(orderRequest, headers);
+        HttpEntity<LaptopOrder> requestEntity = new HttpEntity<>(laptopOrder, headers);
 
-        ResponseEntity<OrderList> response = restTemplate
+        ResponseEntity<Object> response = restTemplate
                 .exchange(BASE_URL + ORDER_LAPTOPS_ENDPOINT, HttpMethod.POST,
-                        requestEntity, OrderList.class);
-        OrderList orderList = response.getBody();
+                        requestEntity, Object.class);
+        System.out.println(response.getBody());
 
-        return true;
+        return response;
     }
 }

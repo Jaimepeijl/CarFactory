@@ -19,6 +19,9 @@ public class PhoneDistributionService {
         int orderAmount = phoneDto.orderAmount();
         if (phoneDto.uuid() !=  null){
             Phone phone = getPhoneById(phoneDto.uuid());
+            if (phone == null){
+                return -1;
+            }
             if (phone.getStock() - orderAmount < phone.getMinStock()){
                 return 0;
             }

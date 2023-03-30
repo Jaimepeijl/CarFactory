@@ -1,9 +1,6 @@
 package nl.ordina.distribution.api;
 
-import lombok.Getter;
 import nl.ordina.distribution.domain.PhoneDistributionService;
-import nl.ordina.distribution.repository.dto.CarOrder;
-import nl.ordina.distribution.repository.dto.OrderResponse;
 import nl.ordina.distribution.repository.dto.PhoneDto;
 import nl.ordina.distribution.repository.dto.PhoneOrder;
 import nl.ordina.distribution.repository.model.Phone;
@@ -13,6 +10,8 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestController
 @CrossOrigin
@@ -62,8 +61,7 @@ public class PhoneDistributionController {
         ResponseEntity<Object> response = restTemplate
                 .exchange(URL, HttpMethod.POST,
                         requestEntity, Object.class);
-        System.out.println(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         return response;
-
     }
 }
