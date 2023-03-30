@@ -5,5 +5,5 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-public record PhoneDto (@NotBlank String name, @NotNull @Min(0) int orderAmount, String colour, UUID uuid) {
+public record PhoneDto (String name, @NotNull @Min(0) int orderAmount, String colour, UUID uuid) {
 }
