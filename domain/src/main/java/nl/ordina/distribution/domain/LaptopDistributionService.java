@@ -20,6 +20,9 @@ public class LaptopDistributionService {
         int orderAmount = laptopDto.orderAmount();
         if (laptopDto.id() !=  null){
             Laptop laptop = getLaptopById(laptopDto.id());
+            if (laptop == null){
+                return -1;
+            }
             if (laptop.getStock() - orderAmount < laptop.getMinStock()){
                 return 0;
             }

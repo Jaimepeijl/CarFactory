@@ -20,6 +20,9 @@ public class CarDistributionService {
         int orderAmount = carDto.orderAmount();
         if (carDto.uuid() !=  null){
             Car car = getCarById(carDto.uuid());
+            if (car == null){
+                return -1;
+            }
             if (car.getStock() - orderAmount < car.getMinStock()){
                 return 0;
             }

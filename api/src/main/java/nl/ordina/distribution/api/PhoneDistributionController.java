@@ -11,6 +11,8 @@ import org.springframework.web.client.RestTemplate;
 import javax.validation.Valid;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @RestController
 @CrossOrigin
 public class PhoneDistributionController {
@@ -59,8 +61,7 @@ public class PhoneDistributionController {
         ResponseEntity<Object> response = restTemplate
                 .exchange(URL, HttpMethod.POST,
                         requestEntity, Object.class);
-        System.out.println(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         return response;
-
     }
 }

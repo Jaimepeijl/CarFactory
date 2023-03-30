@@ -34,11 +34,11 @@ public class LaptopDistributionController {
         } else if (stockCode < 0) {
             return new ResponseEntity<>("Did not find laptop '" + laptopDto.model() + "'", HttpStatus.BAD_REQUEST);
         } else {
-            LaptopOrder laptopOrder = new LaptopOrder(1);
+            int orderAmount = 5;
+            LaptopOrder laptopOrder = new LaptopOrder(orderAmount);
             if (factoryOrder(laptopOrder) != null) {
-                return new ResponseEntity<>(String.format("The current stock for %s reached it's minimum, "
-                                + laptopOrder.amountOfLaptops() + "cars are ordered in the factory",
-                        laptopDto.model()), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(String.format("The current stock for %s reached it's minimum, " + orderAmount +
+                        " cars are ordered in the factory", laptopDto.model()), HttpStatus.BAD_REQUEST);
             }
             return new ResponseEntity<>("Unknown error", HttpStatus.BAD_REQUEST);
         }
