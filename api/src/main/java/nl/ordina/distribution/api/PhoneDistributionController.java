@@ -1,9 +1,6 @@
 package nl.ordina.distribution.api;
 
-import lombok.Getter;
 import nl.ordina.distribution.domain.PhoneDistributionService;
-import nl.ordina.distribution.repository.dto.CarOrder;
-import nl.ordina.distribution.repository.dto.OrderResponse;
 import nl.ordina.distribution.repository.dto.PhoneDto;
 import nl.ordina.distribution.repository.dto.PhoneOrder;
 import nl.ordina.distribution.repository.model.Phone;
@@ -40,7 +37,7 @@ public class PhoneDistributionController {
             return new ResponseEntity<>("Did not find phone '" + phoneDto.name() + "'",
                     HttpStatus.BAD_REQUEST);
         } else {
-            PhoneOrder phoneOrder = new PhoneOrder(0);
+            PhoneOrder phoneOrder = new PhoneOrder(1);
             if (factoryOrder(phoneOrder) != null){
             return new ResponseEntity<>("Not enough stock for " + phoneDto.name() + ", " + phoneOrder.amountOfMobiles() + " are ordered in the factory",
                     HttpStatus.CREATED);
