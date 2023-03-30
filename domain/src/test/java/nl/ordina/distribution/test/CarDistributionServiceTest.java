@@ -78,7 +78,7 @@ class CarDistributionServiceTest {
         Car car = new Car(uuid, "Tesla", "Model S3XY", "Metalic grijs", "Elektrisch", 220,380,500,4,2,4);
 
         when(carDistributionRepository.findCarByBrandEqualsIgnoreCase(carName)).thenReturn(car);
-        Car result = carService.getCarByName(carName);
+        Car result = carService.getCarByBrand(carName);
 
         assertEquals("Tesla", result.getBrand());
         assertEquals("Model S3XY", result.getModel());

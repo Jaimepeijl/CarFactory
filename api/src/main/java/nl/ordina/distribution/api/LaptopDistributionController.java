@@ -32,7 +32,7 @@ public class LaptopDistributionController {
         if (stockCode > 0) {
             return new ResponseEntity<>((stockCode), HttpStatus.OK);
         } else if (stockCode < 0) {
-            return new ResponseEntity<>("Did not find laptop '" + laptopDto.model() + "'", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Did not find laptop", HttpStatus.BAD_REQUEST);
         } else {
             int orderAmount = 5;
             LaptopOrder laptopOrder = new LaptopOrder(orderAmount);

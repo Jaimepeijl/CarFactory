@@ -36,7 +36,7 @@ public class PhoneDistributionController {
             return new ResponseEntity<>(stockCode,
                     HttpStatus.OK);
         } else if (stockCode < 0) {
-            return new ResponseEntity<>("Did not find phone '" + phoneDto.name() + "'",
+            return new ResponseEntity<>("Did not find phone",
                     HttpStatus.BAD_REQUEST);
         } else {
             PhoneOrder phoneOrder = new PhoneOrder(1);
