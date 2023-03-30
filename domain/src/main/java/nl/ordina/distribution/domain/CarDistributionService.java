@@ -18,46 +18,34 @@ public class CarDistributionService {
 
     public int updateStock(CarDto carDto){
         int orderAmount = carDto.orderAmount();
-        if (carDto.uuid() !=  null){
-            Car car = getCarById(carDto.uuid());
-            if (car == null){
-                return -1;
-            }
-            if (car.getStock() - orderAmount < car.getMinStock()){
-                return 0;
-            }
-            car.setStock(car.getStock() - orderAmount);
-            carDistributionRepository.save(car);
-            return car.getStock();
+        Car car = getCar(carDto);
+        if (car == null){
+            return -1;
         }
-        if (carDto.colour() != null){
-            Car car = carDistributionRepository.findCarByBrandEqualsIgnoreCaseAndColourEqualsIgnoreCase(carDto.name(), carDto.colour());
-            if (car.getStock() - orderAmount < car.getMinStock()){
-                return 0;
-            }
-            car.setStock(car.getStock() - orderAmount);
-            carDistributionRepository.save(car);
-            return car.getStock();
+        if (car.getStock() - orderAmount < car.getMinStock()){
+            return 0;
         }
-        if (carDistributionRepository.findCarByBrandEqualsIgnoreCase(carDto.name()) != null){
-            Car car = getCarByName(carDto.name());
-            if (car.getStock() - orderAmount < car.getMinStock()){
-                return 0;
-            }
-            car.setStock(car.getStock() - orderAmount);
-            carDistributionRepository.save(car);
-            return car.getStock();
-        }
-        return -1;
+        car.setStock(car.getStock() - orderAmount);
+        carDistributionRepository.save(car);
+        return car.getStock();
     }
-
-
-
-    public Car getCarByName(String carName){
+    public Car getCar(CarDto carDto) {
+        if (carDto.uuid() != null) {
+            return getCarById(carDto.uuid());
+        } else if (carDto.colour() != null) {
+            return getCarByBrandAndColour(carDto.name(), carDto.colour());
+        } else {
+            return getCarByBrand(carDto.name());
+        }
+    }
+    public Car getCarByBrand(String carName){
         return carDistributionRepository.findCarByBrandEqualsIgnoreCase(carName);
     }
     public Car getCarById(UUID id){
         return carDistributionRepository.findCarById(id);
+    }
+    public Car getCarByBrandAndColour(String carModel, String carColour){
+        return carDistributionRepository.findCarByBrandEqualsIgnoreCaseAndColourEqualsIgnoreCase(carModel, carColour);
     }
 
     public List<Car> getCars(){

@@ -17,8 +17,7 @@ public class PhoneDistributionService {
 
     public int updateStock (PhoneDto phoneDto) {
         int orderAmount = phoneDto.orderAmount();
-        if (phoneDto.uuid() !=  null){
-            Phone phone = getPhoneById(phoneDto.uuid());
+        Phone phone = getPhone(phoneDto);
             if (phone == null){
                 return -1;
             }
@@ -29,29 +28,21 @@ public class PhoneDistributionService {
             phoneDistributionRepository.save(phone);
             return phone.getStock();
         }
-        if (phoneDto.colour() != null){
-            Phone phone = phoneDistributionRepository.findPhoneByNameEqualsIgnoreCaseAndColourEqualsIgnoreCase(phoneDto.name(), phoneDto.colour());
-            if (phone.getStock() - orderAmount < phone.getMinStock()){
-                return 0;
-            }
-            phone.setStock(phone.getStock() - orderAmount);
-            phoneDistributionRepository.save(phone);
-            return phone.getStock();
+    public Phone getPhone (PhoneDto phoneDto){
+        if (phoneDto.uuid() != null){
+            return getPhoneById(phoneDto.uuid());
+        } else if (phoneDto.colour() != null) {
+            return getPhoneByNameOrColour(phoneDto.name(), phoneDto.colour());
+        } else {
+            return getPhoneByName(phoneDto.name());
         }
-        if (phoneDistributionRepository.findPhoneByNameEqualsIgnoreCase(phoneDto.name()) != null){
-            Phone phone = getPhoneByName(phoneDto.name());
-            if (phone.getStock() - orderAmount < phone.getMinStock()){
-                return 0;
-            }
-            phone.setStock(phone.getStock() - orderAmount);
-            phoneDistributionRepository.save(phone);
-            return phone.getStock();
-        }
-        return -1;
     }
 
     public Phone getPhoneByName(String phoneName){
         return phoneDistributionRepository.findPhoneByNameEqualsIgnoreCase(phoneName);
+    }
+    public Phone getPhoneByNameOrColour(String phoneName, String phoneColour){
+        return phoneDistributionRepository.findPhoneByNameEqualsIgnoreCaseAndColourEqualsIgnoreCase(phoneName, phoneColour);
     }
 
     public Phone getPhoneById(UUID id){
