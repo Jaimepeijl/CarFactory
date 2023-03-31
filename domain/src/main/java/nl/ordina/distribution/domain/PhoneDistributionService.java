@@ -37,6 +37,17 @@ public class PhoneDistributionService {
             return getPhoneByName(phoneDto.name());
         }
     }
+    public Phone checkStockMethod() {
+        List<Phone> phones = getPhones();
+        for (int i = 0; i < phones.size(); ) {
+            Phone phone = getPhoneById(phones.get(i).getId());
+            if (phone.getStock() < phone.getMaxStock()) {
+                return phone;
+            }
+            i++;
+        }
+        return null;
+    }
 
     public Phone getPhoneByName(String phoneName){
         return phoneDistributionRepository.findPhoneByNameEqualsIgnoreCase(phoneName);
@@ -51,5 +62,8 @@ public class PhoneDistributionService {
 
     public List<Phone> getPhones(){
         return phoneDistributionRepository.findAll();
+    }
+    public void savePhone(Phone phone) {
+        phoneDistributionRepository.save(phone);
     }
 }

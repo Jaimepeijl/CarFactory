@@ -11,6 +11,8 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @RestController
 @CrossOrigin
@@ -23,9 +25,10 @@ public class LaptopDistributionController {
 
     @GetMapping("/laptops")
     public List<Laptop> getLaptops() {
+        Timer timer = new Timer();
+        timer.schedule(new checkStock(), 0, 10000);
         return laptopDistributionService.getLaptops();
     }
-
 
     @PutMapping("/laptops/update-stock/")
     public ResponseEntity<Object> updateStock(@RequestBody @Valid LaptopDto laptopDto) {
@@ -69,6 +72,25 @@ public class LaptopDistributionController {
         } catch (HttpClientErrorException ex) {
             HttpStatus status = ex.getStatusCode();
             return new ResponseEntity<>(status);
+        }
+    }
+    public class checkStock extends TimerTask {
+        @Override
+        public void run() {
+            Laptop laptop = laptopDistributionService.checkStockMethod();
+            System.out.println("Stock checked");
+            if(laptop != null){
+                LaptopOrder laptopOrder = new LaptopOrder(1);
+                if(factoryOrder(laptopOrder).getStatusCode() == HttpStatus.OK){
+                    laptop.setStock(laptop.getStock() + 1);
+                    laptopDistributionService.saveLaptop(laptop);
+                    System.out.println(laptop.getBrand() + " stock is updated to " + laptop.getStock());
+                } else {
+                    System.out.println("couldn't order stock at the factory for " + laptop.getBrand());
+                }
+            } else {
+                System.out.println("All laptops are fully stocked");
+            }
         }
     }
 }

@@ -55,7 +55,6 @@ public class CarDistributionController {
         }
     }
 
-
     public ResponseEntity<Object> factoryOrder(CarOrder carOrder) {
         String URL = "http://localhost:8082/order/cars";
         RestTemplate restTemplate = new RestTemplate();
@@ -82,28 +81,23 @@ public class CarDistributionController {
     public class checkStock extends TimerTask {
         @Override
         public void run() {
-            System.out.println(checkStockMethod());;
+            Car car = carDistributionService.checkStockMethod();
             System.out.println("Stock checked");
-        }
-    }
-    public String checkStockMethod() {
-        List<Car> cars = carDistributionService.getCars();
-        String string = "All cars are fully stocked";
-        for (int i = 0; i < cars.size(); ) {
-            Car car = carDistributionService.getCarById(cars.get(i).getId());
-            if (car.getStock() < car.getMaxStock()) {
+            if(car != null){
                 CarOrder carOrder = new CarOrder(1);
                 if(factoryOrder(carOrder).getStatusCode() == HttpStatus.OK){
-                car.setStock(car.getStock() + 1);
-                carDistributionService.updateCar(car);
-                string = car.getBrand() + " stock is updated to " + car.getStock();
+                    car.setStock(car.getStock() + 1);
+                    carDistributionService.saveCar(car);
+                    System.out.println(car.getBrand() + " stock is updated to " + car.getStock());
                 } else {
-                    string = "couldn't order stock at the factory for " + car.getBrand();
+                    System.out.println("couldn't order stock at the factory for " + car.getBrand());
                 }
+            } else {
+                System.out.println("All cars are fully stocked");
             }
-            i++;
+
         }
-        return string;
     }
+
 }
 

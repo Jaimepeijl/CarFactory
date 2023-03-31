@@ -11,6 +11,8 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @RestController
 @CrossOrigin
@@ -24,6 +26,8 @@ public class PhoneDistributionController {
 
     @GetMapping("/phones")
     public List<Phone> getPhones() {
+        Timer timer = new Timer();
+        timer.schedule(new checkStock(), 0, 10000);
         return phoneDistributionService.getPhones();
     }
 
@@ -69,6 +73,26 @@ public class PhoneDistributionController {
         } catch (HttpClientErrorException ex) {
             HttpStatus status = ex.getStatusCode();
             return new ResponseEntity<>(status);
+        }
+    }
+    public class checkStock extends TimerTask {
+        @Override
+        public void run() {
+            Phone phone = phoneDistributionService.checkStockMethod();
+            System.out.println("Stock checked");
+            if(phone != null){
+                PhoneOrder phoneOrder = new PhoneOrder(1);
+                if ( factoryOrder(phoneOrder).getStatusCode() == HttpStatus.OK){
+                    phone.setStock(phone.getStock() + 1);
+                    phoneDistributionService.savePhone(phone);
+                    System.out.println(phone.getName() + " stock is updated to " + phone.getStock());
+                } else {
+                    System.out.println("couldn't order stock at the factory for " + phone.getName());
+                }
+            } else {
+                System.out.println("All phones are fully stocked");
+            }
+
         }
     }
 }
