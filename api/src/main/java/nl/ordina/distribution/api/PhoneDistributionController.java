@@ -6,12 +6,11 @@ import nl.ordina.distribution.repository.dto.PhoneOrder;
 import nl.ordina.distribution.repository.model.Phone;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestController
 @CrossOrigin
@@ -33,18 +32,19 @@ public class PhoneDistributionController {
 
         int stockCode = phoneDistributionService.updateStock(phoneDto);
         if (stockCode > 0) {
-            return new ResponseEntity<>(stockCode,
-                    HttpStatus.OK);
+            return new ResponseEntity<>((String.format("Your order of %d %s %s %s has been placed." +
+                            " Remaining available supply: %d", phoneDto.orderAmount(),
+                    phoneDistributionService.getPhone(phoneDto).getName(),
+                    phoneDistributionService.getPhone(phoneDto).getColour(),
+                    phoneDistributionService.getPhone(phoneDto).getMemory(),
+                    (stockCode - phoneDistributionService.getPhone(phoneDto).getMinStock()))), HttpStatus.OK);
         } else if (stockCode < 0) {
-            return new ResponseEntity<>("Did not find phone",
-                    HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Did not find phone", HttpStatus.BAD_REQUEST);
         } else {
-            PhoneOrder phoneOrder = new PhoneOrder(phoneDto.orderAmount());
-            if (factoryOrder(phoneOrder) != null){
-            return new ResponseEntity<>("Not enough stock for " + phoneDistributionService.getPhone(phoneDto).getName() + ", " + phoneOrder.amountOfMobiles() + " are ordered in the factory",
-                    HttpStatus.CREATED);
-            }
-            return new ResponseEntity<>("Unknown error", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(String.format("The current stock is insufficient for your request. " +
+                            "The maximum order for this phone is %d",
+                    (phoneDistributionService.getPhone(phoneDto).getStock() -
+                            phoneDistributionService.getPhone(phoneDto).getMinStock())), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -57,11 +57,18 @@ public class PhoneDistributionController {
 
         HttpEntity<PhoneOrder> requestEntity = new HttpEntity<>(phoneOrder, headers);
 
-
-        ResponseEntity<Object> response = restTemplate
-                .exchange(URL, HttpMethod.POST,
-                        requestEntity, Object.class);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        return response;
+        try {
+            ResponseEntity<Object> response = restTemplate.exchange(
+                    URL,
+                    HttpMethod.POST,
+                    requestEntity,
+                    Object.class);
+            System.out.println(response.getBody());
+            System.out.println(response.getStatusCode());
+            return response;
+        } catch (HttpClientErrorException ex) {
+            HttpStatus status = ex.getStatusCode();
+            return new ResponseEntity<>(status);
+        }
     }
 }

@@ -35,16 +35,19 @@ public class CarDistributionController {
     public ResponseEntity<Object> updateStock(@RequestBody @Valid CarDto carDto) {
         int stockCode = carDistributionService.updateStock(carDto);
         if (stockCode > 0) {
-            return new ResponseEntity<>(stockCode, HttpStatus.OK);
+            return new ResponseEntity<>((String.format("Your order of %d %s %s %s has been placed." +
+                            " Remaining available supply: %d", carDto.orderAmount(),
+                    carDistributionService.getCar(carDto).getBrand(),
+                    carDistributionService.getCar(carDto).getModel(),
+                    carDistributionService.getCar(carDto).getColour(),
+                    (stockCode - carDistributionService.getCar(carDto).getMinStock()))), HttpStatus.OK);
         } else if (stockCode < 0) {
             return new ResponseEntity<>("Did not find car", HttpStatus.BAD_REQUEST);
         } else {
-            CarOrder carOrder = new CarOrder(carDto.orderAmount());
-            if (factoryOrder(carOrder).getStatusCode() == HttpStatus.OK) {
-                return new ResponseEntity<>(String.format("The current stock for %s reached it's minimum, " + carOrder.amountOfCars() +
-                        " cars are ordered in the factory", carDistributionService.getCar(carDto).getBrand()), HttpStatus.CREATED);
-            }
-            return new ResponseEntity<>("Couldn't order so much from factory", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(String.format("The current stock is insufficient for your request. " +
+                            "The maximum order for this car is %d",
+                    (carDistributionService.getCar(carDto).getStock() -
+                            carDistributionService.getCar(carDto).getMinStock())), HttpStatus.BAD_REQUEST);
         }
     }
 
