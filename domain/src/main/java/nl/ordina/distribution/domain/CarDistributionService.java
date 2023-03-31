@@ -47,8 +47,11 @@ public class CarDistributionService {
     public Car getCarByBrandAndColour(String carModel, String carColour){
         return carDistributionRepository.findCarByBrandEqualsIgnoreCaseAndColourEqualsIgnoreCase(carModel, carColour);
     }
-
     public List<Car> getCars(){
         return carDistributionRepository.findAll();
+    }
+
+    public void updateCar(Car car){
+        carDistributionRepository.save(car);
     }
 }
