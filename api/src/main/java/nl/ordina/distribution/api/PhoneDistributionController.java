@@ -32,7 +32,7 @@ public class PhoneDistributionController {
 
         int stockCode = phoneDistributionService.updateStock(phoneDto);
         if (stockCode > 0) {
-            return new ResponseEntity<>((String.format("Your order of %d %s %s %s has been placed." +
+            return new ResponseEntity<>((String.format("Your order of %d %s %s %s has been successfully processed." +
                             " Remaining available supply: %d", phoneDto.orderAmount(),
                     phoneDistributionService.getPhone(phoneDto).getName(),
                     phoneDistributionService.getPhone(phoneDto).getColour(),

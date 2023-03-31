@@ -35,7 +35,7 @@ public class CarDistributionController {
     public ResponseEntity<Object> updateStock(@RequestBody @Valid CarDto carDto) {
         int stockCode = carDistributionService.updateStock(carDto);
         if (stockCode > 0) {
-            return new ResponseEntity<>((String.format("Your order of %d %s %s %s has been placed." +
+            return new ResponseEntity<>((String.format("Your order of %d %s %s %s has been successfully processed." +
                             " Remaining available supply: %d", carDto.orderAmount(),
                     carDistributionService.getCar(carDto).getBrand(),
                     carDistributionService.getCar(carDto).getModel(),

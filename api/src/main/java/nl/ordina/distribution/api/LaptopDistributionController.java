@@ -31,7 +31,7 @@ public class LaptopDistributionController {
     public ResponseEntity<Object> updateStock(@RequestBody @Valid LaptopDto laptopDto) {
         int stockCode = laptopDistributionService.updateStock(laptopDto);
         if (stockCode > 0) {
-            return new ResponseEntity<>((String.format("Your order of %d %s %s %s has been placed. " +
+            return new ResponseEntity<>((String.format("Your order of %d %s %s %s has been successfully processed. " +
                             "Remaining available supply: %d", laptopDto.orderAmount(),
                     laptopDistributionService.getLaptop(laptopDto).getBrand(),
                     laptopDistributionService.getLaptop(laptopDto).getModel(),
