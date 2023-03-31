@@ -31,8 +31,8 @@ public class LaptopDistributionService {
         }
 
     public Laptop getLaptop(LaptopDto laptopDto) {
-        if (laptopDto.id() != null) {
-            return getLaptopById(laptopDto.id());
+        if (laptopDto.uuid() != null) {
+            return getLaptopById(laptopDto.uuid());
         } else if (laptopDto.colour() != null) {
             return getLaptopByModelAndColour(laptopDto.model(), laptopDto.colour());
         } else {

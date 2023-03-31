@@ -42,7 +42,7 @@ public class CarDistributionController {
             CarOrder carOrder = new CarOrder(carDto.orderAmount());
             if (factoryOrder(carOrder).getStatusCode() == HttpStatus.OK) {
                 return new ResponseEntity<>(String.format("The current stock for %s reached it's minimum, " + carOrder.amountOfCars() +
-                        " cars are ordered in the factory", carDto.name()), HttpStatus.CREATED);
+                        " cars are ordered in the factory", carDistributionService.getCar(carDto).getBrand()), HttpStatus.CREATED);
             }
             return new ResponseEntity<>("Couldn't order so much from factory", HttpStatus.BAD_REQUEST);
         }

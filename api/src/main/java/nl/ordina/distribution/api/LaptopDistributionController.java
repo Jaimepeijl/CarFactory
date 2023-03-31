@@ -38,7 +38,7 @@ public class LaptopDistributionController {
             LaptopOrder laptopOrder = new LaptopOrder(orderAmount);
             if (factoryOrder(laptopOrder) != null) {
                 return new ResponseEntity<>(String.format("The current stock for %s reached it's minimum, " + orderAmount +
-                        " cars are ordered in the factory", laptopDto.model()), HttpStatus.BAD_REQUEST);
+                        " laptops are ordered in the factory", laptopDistributionService.getLaptop(laptopDto).getModel()), HttpStatus.BAD_REQUEST);
             }
             return new ResponseEntity<>("Unknown error", HttpStatus.BAD_REQUEST);
         }
