@@ -39,6 +39,17 @@ public class LaptopDistributionService {
             return getLaptopByModel(laptopDto.model());
         }
     }
+    public Laptop checkStockMethod() {
+        List<Laptop> laptops = getLaptops();
+        for (int i = 0; i < laptops.size(); ) {
+            Laptop laptop = getLaptopById(laptops.get(i).getId());
+            if (laptop.getStock() < laptop.getMaxStock()) {
+                return laptop;
+            }
+            i++;
+        }
+        return null;
+    }
 
     public Laptop getLaptopByModel(String laptopModel) {
         return laptopDistributionRepository.findLaptopByModelEqualsIgnoreCase(laptopModel);
@@ -52,6 +63,9 @@ public class LaptopDistributionService {
 
     public List<Laptop> getLaptops(){
         return laptopDistributionRepository.findAll();
+    }
+    public void saveLaptop(Laptop laptop) {
+        laptopDistributionRepository.save(laptop);
     }
 }
 
