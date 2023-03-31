@@ -55,8 +55,8 @@ class LaptopDistributionServiceTest {
                 5, 3, 5, 3, "i7");
 
         // When
-        if (laptopDto.id() != null) {
-            when(laptopDistributionRepository.findLaptopById(laptopDto.id())).thenReturn(laptop);
+        if (laptopDto.uuid() != null) {
+            when(laptopDistributionRepository.findLaptopById(laptopDto.uuid())).thenReturn(laptop);
         } else {
             when(laptopDistributionRepository.findLaptopByModelEqualsIgnoreCaseAndColourEqualsIgnoreCase
                     (laptopDto.model(), laptopDto.colour())).thenReturn(laptop);
