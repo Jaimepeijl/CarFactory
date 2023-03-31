@@ -11,6 +11,8 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @RestController
 @CrossOrigin
@@ -28,6 +30,8 @@ public class CarDistributionController {
 
     @GetMapping("/cars")
     public List<Car> getCars() {
+        Timer timer = new Timer();
+        timer.schedule(new checkStock(), 0, 10000);
         return carDistributionService.getCars();
     }
 
@@ -71,6 +75,32 @@ public class CarDistributionController {
             HttpStatus status = ex.getStatusCode();
             return new ResponseEntity<>(status);
         }
+    }
+    public class checkStock extends TimerTask {
+        @Override
+        public void run() {
+            System.out.println(checkStockMethod());;
+            System.out.println("Stock checked");
+        }
+    }
+    public String checkStockMethod() {
+        List<Car> cars = carDistributionService.getCars();
+        String string = "All cars are fully stocked";
+        for (int i = 0; i < cars.size(); ) {
+            Car car = carDistributionService.getCarById(cars.get(i).getId());
+            if (car.getStock() < car.getMaxStock()) {
+                CarOrder carOrder = new CarOrder(1);
+                if(factoryOrder(carOrder).getStatusCode() == HttpStatus.OK){
+                car.setStock(car.getStock() + 1);
+                carDistributionService.updateCar(car);
+                string = car.getBrand() + " stock is updated to " + car.getStock();
+                } else {
+                    string = "couldn't order stock at the factory for " + car.getBrand();
+                }
+            }
+            i++;
+        }
+        return string;
     }
 }
 

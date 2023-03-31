@@ -41,7 +41,7 @@ public class PhoneDistributionController {
         } else {
             PhoneOrder phoneOrder = new PhoneOrder(0);
             if (factoryOrder(phoneOrder) != null){
-            return new ResponseEntity<>("Not enough stock for " + phoneDistributionService.getPhone(phoneDto).getName() + ", " + phoneOrder.amountOfMobiles() + " are ordered in the factory",
+            return new ResponseEntity<>("Not enough stock for " + phoneDistributionService.getPhone(phoneDto).getName() + ", " + phoneOrder.amountOfMobiles() + " phones are ordered in the factory",
                     HttpStatus.CREATED);
             }
             return new ResponseEntity<>("Unknown error", HttpStatus.BAD_REQUEST);
