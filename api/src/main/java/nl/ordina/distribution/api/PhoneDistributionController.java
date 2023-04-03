@@ -34,7 +34,6 @@ public class PhoneDistributionController {
 
     @PutMapping("/phones/update-stock")
     public ResponseEntity<Object> updateStock(@RequestBody @Valid PhoneDto phoneDto) {
-
         int stockCode = phoneDistributionService.updateStock(phoneDto);
         if (stockCode > 0) {
             return new ResponseEntity<>((String.format("Your order of %d %s %s %s has been successfully processed." +
