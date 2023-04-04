@@ -82,20 +82,34 @@ public class CarDistributionController {
         @Override
         public void run() {
             Car car = carDistributionService.checkStockMethod();
-            System.out.println("Stock checked");
+            System.out.println("---------------------------");
+            System.out.println("Car stock checked");
             if(car != null){
-                CarOrder carOrder = new CarOrder(1);
-                if(factoryOrder(carOrder).getStatusCode() == HttpStatus.OK){
-                    car.setStock(car.getStock() + 1);
-                    carDistributionService.saveCar(car);
-                    System.out.println(car.getBrand() + " stock is updated to " + car.getStock());
-                } else {
-                    System.out.println("couldn't order stock at the factory for " + car.getBrand());
-                }
+                orderMaxStock(car);
             } else {
                 System.out.println("All cars are fully stocked");
             }
-
+        }
+        public void orderMaxStock (Car car) {
+            int orderAmount = car.getMaxStock() - car.getStock();
+            if (orderAmount >= 5){
+                orderAmount = 4;
+            }
+            int tries = 0;
+            CarOrder carOrder = new CarOrder(orderAmount);
+            while(orderAmount > 0){
+                tries++;
+                if (factoryOrder(carOrder).getStatusCode() == HttpStatus.OK) {
+                    car.setStock(car.getStock() + orderAmount);
+                    carDistributionService.saveCar(car);
+                    System.out.println(car.getBrand() + " stock is updated to " + car.getStock());
+                    break;
+                }
+                if (tries >= 5){
+                    System.out.println("couldn't order stock at the factory for " + car.getBrand());
+                    break;
+                }
+            }
         }
     }
 

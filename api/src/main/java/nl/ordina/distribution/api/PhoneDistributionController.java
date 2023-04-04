@@ -7,6 +7,7 @@ import nl.ordina.distribution.repository.model.Phone;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
@@ -69,7 +70,7 @@ public class PhoneDistributionController {
             System.out.println(response.getBody());
             System.out.println(response.getStatusCode());
             return response;
-        } catch (HttpClientErrorException ex) {
+        } catch (HttpClientErrorException | HttpServerErrorException ex) {
             HttpStatus status = ex.getStatusCode();
             return new ResponseEntity<>(status);
         }
@@ -80,18 +81,32 @@ public class PhoneDistributionController {
             Phone phone = phoneDistributionService.checkStockMethod();
             System.out.println("Stock checked");
             if(phone != null){
-                PhoneOrder phoneOrder = new PhoneOrder(1);
-                if ( factoryOrder(phoneOrder).getStatusCode() == HttpStatus.OK){
-                    phone.setStock(phone.getStock() + 1);
-                    phoneDistributionService.savePhone(phone);
-                    System.out.println(phone.getName() + " stock is updated to " + phone.getStock());
-                } else {
-                    System.out.println("couldn't order stock at the factory for " + phone.getName());
-                }
+                orderMaxStock(phone);
             } else {
                 System.out.println("All phones are fully stocked");
             }
 
+        }
+    }
+    public void orderMaxStock (Phone phone) {
+        int orderAmount = phone.getMaxStock() - phone.getStock();
+        if (orderAmount >= 5){
+            orderAmount = 5;
+        }
+        int tries = 0;
+        PhoneOrder phoneOrder = new PhoneOrder(orderAmount);
+        while(orderAmount > 0){
+            tries++;
+            if (factoryOrder(phoneOrder).getStatusCode() == HttpStatus.OK) {
+                phone.setStock(phone.getStock() + orderAmount);
+                phoneDistributionService.savePhone(phone);
+                System.out.println(phone.getName() + " - " + phone.getColour() + " stock is updated to " + phone.getStock());
+                break;
+            }
+            if (tries >= 5){
+                System.out.println("couldn't order stock at the factory for " + phone.getName() + " - " + phone.getColour());
+                break;
+            }
         }
     }
 }
