@@ -31,7 +31,7 @@ public class CarDistributionController {
     @GetMapping("/cars")
     public List<Car> getCars() {
         Timer timer = new Timer();
-        timer.schedule(new checkStock(), 0, 10000);
+        timer.schedule(new checkStock(), 0, 60000);
         return carDistributionService.getCars();
     }
 
