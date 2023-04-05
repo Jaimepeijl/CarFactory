@@ -79,6 +79,7 @@ public class PhoneDistributionController {
         @Override
         public void run() {
             Phone phone = phoneDistributionService.checkStockMethod();
+            System.out.println("---------------------------");
             System.out.println("Stock checked");
             if(phone != null){
                 orderMaxStock(phone);
